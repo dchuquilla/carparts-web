@@ -12,12 +12,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
+import MoveToInboxTwoToneIcon from '@mui/icons-material/MoveToInboxTwoTone';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import RequestList from './pages/RequestList';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
@@ -86,19 +86,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    backgroundColor: '#eef2f1', // Set background color
     variants: [
       {
         props: ({ open }) => open,
         style: {
           ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...openedMixin(theme),
+            backgroundColor: '#effff5', // Set background color
+          },
         },
       },
       {
         props: ({ open }) => !open,
         style: {
           ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
+          '& .MuiDrawer-paper': {
+            ...closedMixin(theme),
+            backgroundColor: '#eef2f1', // Set background color
+          },
         },
       },
     ],
@@ -155,31 +162,21 @@ function App() {
             <ListItem key="Inicio" disablePadding sx={{ display: 'block' }} component={Link} to="/">
               <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
                   open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                <ListItemIcon sx={[ { minWidth: 0, justifyContent: 'center', },
+                <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
                     open ? { mr: 3, } : { mr: 'auto', }, ]} >
                   <InboxIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Inicio"
-                  sx={[
-                    open ? { opacity: 1, } : { opacity: 0, },
-                  ]}
-                />
+                </HomeTwoToneIcon>
+                <ListItemText primary="Inicio" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
               </ListItemButton>
             </ListItem>
             <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
               <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
                   open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                <ListItemIcon sx={[ { minWidth: 0, justifyContent: 'center', },
+                <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
                     open ? { mr: 3, } : { mr: 'auto', }, ]} >
                   <InboxIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Solicitudes"
-                  sx={[
-                    open ? { opacity: 1, } : { opacity: 0, },
-                  ]}
-                />
+                </MoveToInboxTwoToneIcon>
+                <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
               </ListItemButton>
             </ListItem>
           </List>

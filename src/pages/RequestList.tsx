@@ -23,14 +23,12 @@ const RequestList: React.FC = () => {
   return (
     <div>
       <h1>Solicitudes de Repuestos</h1>
-      <Box
-      sx={{
+      <Box sx={{
         width: '100%',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
         gap: 2,
-      }}
-      >
+      }}>
         {requests.map((request: any) => (
           <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
@@ -46,22 +44,13 @@ const RequestList: React.FC = () => {
                 </Typography>
                 <Divider />
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                  <ListItem
-                    key={request.id}
-                    disableGutters
-                  >
+                  <ListItem key={request.id} disableGutters >
                     <ListItemText primary={`Marca: ${request.part_brand}`} />
                   </ListItem>
-                  <ListItem
-                    key={request.id}
-                    disableGutters
-                  >
+                  <ListItem key={request.id} disableGutters >
                     <ListItemText primary={`Modelo: ${request.part_model}`} />
                   </ListItem>
-                  <ListItem
-                    key={request.id}
-                    disableGutters
-                  >
+                  <ListItem key={request.id} disableGutters >
                     <ListItemText primary={`Año: ${request.part_year}`} />
                   </ListItem>
                 </List>
