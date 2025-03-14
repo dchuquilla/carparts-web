@@ -37,7 +37,7 @@ const RequestList: React.FC = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image="/quien_tiene_logo.svg"
+                image="/quien_tiene_logo_n.png"
                 alt="green iguana"
               />
               <CardContent>
