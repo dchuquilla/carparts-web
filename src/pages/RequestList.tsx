@@ -5,13 +5,16 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import axios from 'axios';
-import { Box, Divider, IconButton, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
+import { useNavigate } from 'react-router-dom';
 
 const RequestList: React.FC = () => {
   const [requests, setRequests] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/v1/requests')
+    axios.get('https://dev-api.quientiene.com/api/v1/requests')
       .then(response => {
         setRequests(response.data);
       })
@@ -20,17 +23,23 @@ const RequestList: React.FC = () => {
       });
   }, []);
 
+  const handleCardClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, to: string) => {
+    event.preventDefault();
+    setTimeout(() => {
+      navigate(to);
+    }, 200); // 200ms delay
+  };
+
   return (
     <div>
       <h1>Solicitudes de Repuestos</h1>
       <Box sx={{
-        width: '100%',
-        display: 'grid',
+        width: '100%', display: 'grid', gap: 2,
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
-        gap: 2,
       }}>
         {requests.map((request: any) => (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 345, textDecoration: 'none' }} component="a" href="/"
+            onClick={(event) => handleCardClick(event, "/")}>
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -43,15 +52,24 @@ const RequestList: React.FC = () => {
                     {request.part_name.toUpperCase()}
                 </Typography>
                 <Divider />
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                  <ListItem key={request.id} disableGutters >
-                    <ListItemText primary={`Marca: ${request.part_brand}`} />
+                <List>
+                  <ListItem key={request.id}>
+                    <ListItemIcon>
+                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
+                    </ListItemIcon>
+                    <ListItemText primary={request.part_brand} secondary='Marca' />
                   </ListItem>
-                  <ListItem key={request.id} disableGutters >
-                    <ListItemText primary={`Modelo: ${request.part_model}`} />
+                  <ListItem key={request.id}>
+                    <ListItemIcon>
+                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
+                    </ListItemIcon>
+                    <ListItemText primary={request.part_model} secondary='Modelo' />
                   </ListItem>
-                  <ListItem key={request.id} disableGutters >
-                    <ListItemText primary={`Año: ${request.part_year}`} />
+                  <ListItem key={request.id}>
+                    <ListItemIcon>
+                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
+                    </ListItemIcon>
+                    <ListItemText primary={request.part_year} secondary='Año' />
                   </ListItem>
                 </List>
               </CardContent>
