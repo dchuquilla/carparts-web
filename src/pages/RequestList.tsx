@@ -26,7 +26,7 @@ const RequestList: React.FC = () => {
   const handleCardClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, to: string) => {
     event.preventDefault();
     setTimeout(() => {
-      navigate(to);
+      void navigate(to);
     }, 200); // 200ms delay
   };
 
@@ -38,13 +38,13 @@ const RequestList: React.FC = () => {
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
       }}>
         {requests.map((request: any) => (
-          <Card sx={{ maxWidth: 345, textDecoration: 'none' }} component="a" href="/"
+          <Card key={request.id} sx={{ maxWidth: 345, textDecoration: 'none' }} component="a" href="/"
             onClick={(event) => handleCardClick(event, "/")}>
             <CardActionArea>
               <CardMedia
                 component="img"
                 height="140"
-                image="/quien_tiene_logo_n.png"
+                image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
                 alt="green iguana"
               />
               <CardContent>
