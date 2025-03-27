@@ -28,6 +28,7 @@ interface RequestData {
   part_brand?: string;
   part_model?: string;
   part_year?: string;
+  part_chassis?: string;
 }
 
 const RequestDetails = () => {
@@ -113,6 +114,12 @@ const RequestDetails = () => {
                           <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                         </ListItemIcon>
                         <ListItemText primary={requestData.part_year} secondary='Año' />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon>
+                          <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
+                        </ListItemIcon>
+                        <ListItemText primary={requestData.part_chassis} secondary='Chasis' />
                       </ListItem>
                     </List>
                   </CardContent>
