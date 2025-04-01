@@ -9,12 +9,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
 import { useNavigate } from 'react-router-dom';
 
 const RequestList: React.FC = () => {
+  const { t } = useTranslation();
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ const RequestList: React.FC = () => {
 
   return (
     <div>
-      <h1>Solicitudes de Repuestos</h1>
+      <h1>{t('requestsList.title')}</h1>
       <Box sx={{
         width: '100%', display: 'grid', gap: 2,
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
