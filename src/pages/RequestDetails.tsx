@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
@@ -32,6 +33,7 @@ interface RequestData {
 }
 
 const RequestDetails = () => {
+  const { t } = useTranslation();
   const { show_key } = useParams();
   const [requestData, setRequestData] = useState<RequestData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +73,7 @@ const RequestDetails = () => {
   }
 
   if (!requestData) {
-    return <Typography variant="h6">No request details found.</Typography>;
+    return <Typography variant="h6">{t('requestDetails.notDetailsFound')}</Typography>;
   }
 
   return (
@@ -87,7 +89,7 @@ const RequestDetails = () => {
                     component="img"
                     height="140"
                     image={requestData.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
-                    alt="Part Image"
+                    alt={t('requestDetails.partImage')}
                     onLoad={handleImageLoad}
                     style={{ display: loadingImage ? 'none' : 'block' }}
                   />
@@ -101,25 +103,25 @@ const RequestDetails = () => {
                         <ListItemIcon>
                           <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                         </ListItemIcon>
-                        <ListItemText primary={requestData.part_brand} secondary='Marca' />
+                        <ListItemText primary={requestData.part_brand} secondary={t('requestDetails.partBrand')} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon>
                           <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                         </ListItemIcon>
-                        <ListItemText primary={requestData.part_model} secondary='Modelo' />
+                        <ListItemText primary={requestData.part_model} secondary={t('requestDetails.partModel')} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon>
                           <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                         </ListItemIcon>
-                        <ListItemText primary={requestData.part_year} secondary='Año' />
+                        <ListItemText primary={requestData.part_year} secondary={t('requestDetails.partYear')} />
                       </ListItem>
                       <ListItem>
                         <ListItemIcon>
                           <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                         </ListItemIcon>
-                        <ListItemText primary={requestData.part_chassis} secondary='Chasis' />
+                        <ListItemText primary={requestData.part_chassis} secondary={t('requestDetails.partChassis')} />
                       </ListItem>
                     </List>
                   </CardContent>
@@ -136,14 +138,14 @@ const RequestDetails = () => {
                   {loadingImage && <CircularProgress />}
                   <img
                     src={requestData.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
-                    alt="Part Image"
+                    alt={t('requestDetails.partImage')}
                     style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
                     onLoad={handleImageLoad}
                   />
                 </DialogContent>
                 <DialogActions>
                   <Button autoFocus onClick={handleClose}>
-                    Cerrar
+                    {t('close')}
                   </Button>
                 </DialogActions>
               </Dialog>
@@ -152,7 +154,7 @@ const RequestDetails = () => {
           <Grid size={{ xs: 12, md: 8 }}>
             <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }}>
               <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
-                Propuestas
+                {t('proposals')}
               </Typography>
             </Paper>
           </Grid>
