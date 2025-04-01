@@ -20,6 +20,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import RequestList from './pages/RequestList';
 import RequestDetails from './pages/RequestDetails';
+import UserForm from './pages/UserForm';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -190,6 +191,7 @@ function App() {
             <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />
             <Route path="/requests" element={<RequestList />} />
             <Route path="/requests/:show_key" element={<RequestDetails />} />
+            <Route path="/users/new" element={<UserForm />} />
           </Routes>
         </Box>
       </Box>
