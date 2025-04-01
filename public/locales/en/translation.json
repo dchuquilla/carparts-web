@@ -1,0 +1,35 @@
+{
+  "welcome": "Welcome",
+  "requestsList": {
+    "title": "Requests List",
+    "search": "Search",
+    "filter": "Filter",
+    "status": "Status",
+    "date": "Date",
+    "actions": "Actions",
+    "viewDetails": "View Details",
+    "noRequests": "No requests available"
+  },
+  "storeForm": {
+    "storeName": "Store Name",
+    "storeAddress": "Store Address",
+    "phone": "Store Phone",
+    "email": "Email",
+    "storeUid": "Store unique identifier",
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+    "createStore": "Create Store",
+    "storeCreated": "Store created successfully",
+    "storeCreationFailed": "Failed to create store",
+    "errors": {
+      "password": "Password is required",
+      "passwordConfirm": "Password confirmation is required",
+      "passwordMismatch": "Passwords do not match",
+      "storeName": "Store name is required",
+      "storeAddress": "Store address is required",
+      "phone": "Store phone is required",
+      "email": "Email is required",
+      "storeUi": "Store UI is required"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "welcome": "Bienvenido",
+  "requestsList": {
+    "title": "Lista de solicitudes",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "status": "Estado",
+    "date": "Fecha",
+    "actions": "Acciones",
+    "viewDetails": "Ver detalles",
+    "noRequests": "No hay solicitudes disponibles"
+  },
+  "storeForm": {
+    "storeName": "Nombre de la tienda",
+    "storeAddress": "Dirección de la tienda",
+    "phone": "Teléfono de la tienda",
+    "email": "Correo electrónico",
+    "storeUid": "RUC",
+    "password": "Contraseña",
+    "passwordConfirm": "Confirmar contraseña",
+    "createStore": "Crear tienda",
+    "storeCreated": "Tienda creada con éxito",
+    "storeCreationFailed": "Error al crear la tienda",
+    "errors": {
+      "password": "La contraseña es obligatoria",
+      "passwordConfirm": "La confirmación de la contraseña es obligatoria",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "storeName": "El nombre de la tienda es obligatorio",
+      "storeAddress": "La dirección de la tienda es obligatoria",
+      "phone": "El teléfono de la tienda es obligatorio",
+      "email": "El correo electrónico es obligatorio",
+      "storeUi": "La interfaz de usuario de la tienda es obligatoria"
+    }
+  }
+}
