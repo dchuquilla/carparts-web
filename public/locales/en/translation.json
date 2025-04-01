@@ -1,5 +1,12 @@
 {
   "welcome": "Welcome",
+  "close": "Close",
+  "requests": "Requests",
+  "request": "Request",
+  "store": "Store",
+  "stores": "Stores",
+  "proposal": "Proposal",
+  "proposals": "Proposals",
   "requestsList": {
     "title": "Requests List",
     "search": "Search",
@@ -9,6 +16,16 @@
     "actions": "Actions",
     "viewDetails": "View Details",
     "noRequests": "No requests available"
+  },
+  "requestDetails": {
+    "title": "Request Details",
+    "notDetailsFound": "No request details found.",
+    "partName": "Part Name",
+    "partBrand": "Brand",
+    "partModel": "Model",
+    "partYear": "Year",
+    "partChassis": "Chassis",
+    "partImage": "Part Image"
   },
   "storeForm": {
     "storeName": "Store Name",
