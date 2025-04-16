@@ -15,13 +15,18 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import MoveToInboxTwoToneIcon from '@mui/icons-material/MoveToInboxTwoTone';
+import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
+import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import RequestList from './pages/RequestList';
 import RequestDetails from './pages/RequestDetails';
 import UserForm from './pages/UserForm';
+import SignIn from './pages/SignIn';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { t } from 'i18next';
 
 const drawerWidth = 240;
 
@@ -117,6 +122,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,16 +182,39 @@ function App() {
                 <ListItemText primary="Inicio" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
               </ListItemButton>
             </ListItem>
-            <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
-              <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
+            {isAuthenticated ? (
+              <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
+                <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
                   open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
+                  <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
                     open ? { mr: 3, } : { mr: 'auto', }, ]} >
                   <InboxIcon />
-                </MoveToInboxTwoToneIcon>
-                <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
-              </ListItemButton>
-            </ListItem>
+                  </MoveToInboxTwoToneIcon>
+                  <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <><ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
+                  <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
+                    <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
+                    open ? { mr: 3, } : { mr: 'auto', },]}>
+                      <InboxIcon />
+                    </LoginTwoToneIcon>
+                    <ListItemText primary={t('login')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
+                  <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
+                    <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
+                    open ? { mr: 3, } : { mr: 'auto', },]}>
+                      <InboxIcon />
+                    </HowToRegTwoToneIcon>
+                    <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
+                  </ListItemButton>
+                </ListItem></>
+            )}
           </List>
         </Drawer>
 
@@ -192,6 +226,7 @@ function App() {
             <Route path="/requests" element={<RequestList />} />
             <Route path="/requests/:show_key" element={<RequestDetails />} />
             <Route path="/users/new" element={<UserForm />} />
+            <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           </Routes>
         </Box>
       </Box>
@@ -199,4 +234,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
