@@ -7,6 +7,11 @@
   "stores": "Tiendas",
   "proposal": "Propuesta",
   "proposals": "Propuestas",
+  "login": "Iniciar sesión",
+  "signUp": "Registrarse",
+  "errors": {
+    "unknownError": "Error desconocido"
+  },
   "requestsList": {
     "title": "Lista de solicitudes",
     "search": "Buscar",
@@ -47,6 +52,19 @@
       "phone": "El teléfono de la tienda es obligatorio",
       "email": "El correo electrónico es obligatorio",
       "storeUi": "La interfaz de usuario de la tienda es obligatoria"
+    }
+  },
+  "sessionForm": {
+    "title": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "submit": "Enviar",
+    "errors": {
+      "email": "El correo electrónico es obligatorio",
+      "password": "La contraseña es obligatoria",
+      "invalidCredentials": "Credenciales inválidas"
     }
   }
 }

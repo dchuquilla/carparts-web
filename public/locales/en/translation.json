@@ -7,6 +7,11 @@
   "stores": "Stores",
   "proposal": "Proposal",
   "proposals": "Proposals",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "errors": {
+    "unknownError": "Unknown error"
+  },
   "requestsList": {
     "title": "Requests List",
     "search": "Search",
@@ -47,6 +52,19 @@
       "phone": "Store phone is required",
       "email": "Email is required",
       "storeUi": "Store UI is required"
+    }
+  },
+  "sessionForm": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "forgotPassword": "Forgot your password?",
+    "submit": "Submit",
+    "errors": {
+      "email": "Email is required",
+      "password": "Password is required",
+      "invalidCredentials": "Invalid email or password"
     }
   }
 }
