@@ -20,7 +20,7 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
       const response = await fetch('https://dev-api.quientiene.com/users/sign_in', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({user: { email, password }}),
       });
 
       if (!response.ok) {
