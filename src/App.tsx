@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -9,22 +10,27 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
-import MoveToInboxTwoToneIcon from '@mui/icons-material/MoveToInboxTwoTone';
 import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
 import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
+import MenuIcon from '@mui/icons-material/Menu';
+import MoveToInboxTwoToneIcon from '@mui/icons-material/MoveToInboxTwoTone';
+
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import RequestList from './pages/RequestList';
 import RequestDetails from './pages/RequestDetails';
 import UserForm from './pages/UserForm';
 import SignIn from './pages/SignIn';
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { t } from 'i18next';
 
@@ -123,6 +129,8 @@ function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -137,100 +145,159 @@ function App() {
     setOpen(false);
   };
 
-  return (
-    <Router>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={[
-                {
-                  marginRight: 5,
-                },
-                open && { display: 'none' },
-              ]}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              QuienTiene.com
-            </Typography>
-          </Toolbar>
-        </AppBar>
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-        {/* Sidebar */}
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <ListItem key="Inicio" disablePadding sx={{ display: 'block' }} component={Link} to="/">
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await fetch('https://dev-api.quientiene.com/users/sign_out', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+    } catch (error) {
+      console.error('Error during logout:', error);
+    } finally {
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
+      handleClose();
+      void navigate('/signin');
+    }
+  };
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={[
+              {
+                marginRight: 5,
+              },
+              open && { display: 'none' },
+            ]}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            QuienTiene.com
+          </Typography>
+
+          {isAuthenticated && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={() => { void handleLogOut(); }}>Logout</MenuItem>
+              </Menu>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      {/* Sidebar */}
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <ListItem key="Inicio" disablePadding sx={{ display: 'block' }} component={Link} to="/">
+            <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
+                open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
+              <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
+                  open ? { mr: 3, } : { mr: 'auto', }, ]} >
+                <InboxIcon />
+              </HomeTwoToneIcon>
+              <ListItemText primary="Inicio" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
+            </ListItemButton>
+          </ListItem>
+          {isAuthenticated ? (
+            <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
               <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
-                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
-                    open ? { mr: 3, } : { mr: 'auto', }, ]} >
-                  <InboxIcon />
-                </HomeTwoToneIcon>
-                <ListItemText primary="Inicio" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
+                open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
+                <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
+                  open ? { mr: 3, } : { mr: 'auto', }, ]} >
+                <InboxIcon />
+                </MoveToInboxTwoToneIcon>
+                <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
               </ListItemButton>
             </ListItem>
-            {isAuthenticated ? (
-              <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
-                <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
-                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                  <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
-                    open ? { mr: 3, } : { mr: 'auto', }, ]} >
-                  <InboxIcon />
-                  </MoveToInboxTwoToneIcon>
-                  <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
+          ) : (
+            <><ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
+                <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
+                  <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
+                  open ? { mr: 3, } : { mr: 'auto', },]}>
+                    <InboxIcon />
+                  </LoginTwoToneIcon>
+                  <ListItemText primary={t('login')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
                 </ListItemButton>
               </ListItem>
-            ) : (
-              <><ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
-                  <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
-                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
-                    <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
-                    open ? { mr: 3, } : { mr: 'auto', },]}>
-                      <InboxIcon />
-                    </LoginTwoToneIcon>
-                    <ListItemText primary={t('login')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
-                  <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
-                  open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
-                    <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
-                    open ? { mr: 3, } : { mr: 'auto', },]}>
-                      <InboxIcon />
-                    </HowToRegTwoToneIcon>
-                    <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
-                  </ListItemButton>
-                </ListItem></>
-            )}
-          </List>
-        </Drawer>
+              <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
+                <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
+                  <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
+                  open ? { mr: 3, } : { mr: 'auto', },]}>
+                    <InboxIcon />
+                  </HowToRegTwoToneIcon>
+                  <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
+                </ListItemButton>
+              </ListItem></>
+          )}
+        </List>
+      </Drawer>
 
-        {/* Main Content */}
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
-          <Routes>
-            <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />
-            <Route path="/requests" element={<RequestList />} />
-            <Route path="/requests/:show_key" element={<RequestDetails />} />
-            <Route path="/users/new" element={<UserForm />} />
-            <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
-          </Routes>
-        </Box>
+      {/* Main Content */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        <Routes>
+          <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />
+          <Route path="/requests" element={<RequestList />} />
+          <Route path="/requests/:show_key" element={<RequestDetails />} />
+          <Route path="/users/new" element={<UserForm />} />
+          <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
+        </Routes>
       </Box>
-    </Router>
+    </Box>
   )
 }
 
