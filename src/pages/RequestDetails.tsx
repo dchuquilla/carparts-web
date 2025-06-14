@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, Fab } from '@mui/material';
+import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -18,9 +18,6 @@ import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDou
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
