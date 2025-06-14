@@ -79,19 +79,19 @@ const RequestList: React.FC = () => {
                     <ListItemIcon>
                       <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                     </ListItemIcon>
-                    <ListItemText primary={request.part_brand} secondary='Marca' />
+                    <ListItemText primary={request.part_brand} secondary={t('requestDetails.partBrand')} />
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
                       <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                     </ListItemIcon>
-                    <ListItemText primary={request.part_model} secondary='Modelo' />
+                    <ListItemText primary={request.part_model} secondary={t('requestDetails.partModel')} />
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
                       <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
                     </ListItemIcon>
-                    <ListItemText primary={request.part_year} secondary='Año' />
+                    <ListItemText primary={request.part_year} secondary={t('requestDetails.partYear')} />
                   </ListItem>
                 </List>
               </CardContent>
