@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { Container, CircularProgress } from '@mui/material';
+import { Container, CircularProgress, Card, CardContent, CardActions } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -23,6 +23,7 @@ import { useTheme } from '@mui/material/styles';
 
 import RequestType from '../types/RequestType';
 import RequestCard from '../components/RequestCard';
+import ProposalList from '../components/ProposalList';
 
 
 const RequestDetails = () => {
@@ -169,21 +170,28 @@ const RequestDetails = () => {
                 minHeight: 0,
               }}
             >
-              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                {t('proposalsList.title')}
-              </Typography>
-
-              <BottomNavigation
-                showLabels
-                value={value}
-                onChange={(_event, newValue) => {
-                  setValue(newValue);
-                }}
-              >
-                <BottomNavigationAction label={t('proposalsList.addProposal')} icon={<AddIcon />} />
-                {/* <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-                <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
-              </BottomNavigation>
+                <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+                <CardContent sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+                  <Typography gutterBottom variant="h4" component="div">
+                    {t('proposalsList.title')}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <ProposalList />
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
+                  <BottomNavigation
+                    showLabels
+                    value={value}
+                    onChange={(_event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+                  >
+                    <BottomNavigationAction label={t('proposalsList.addProposal')} icon={<AddIcon />} />
+                  </BottomNavigation>
+                </CardActions>
+              </Card>
             </Paper>
           </Grid>
         </Grid>
