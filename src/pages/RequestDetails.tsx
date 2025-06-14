@@ -3,18 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Container, CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
 
 import AddIcon from '@mui/icons-material/Add';
-import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -26,21 +21,14 @@ import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
+import RequestType from '../types/RequestType';
+import RequestCard from '../components/RequestCard';
 
-interface RequestData {
-  show_key: string;
-  part_image?: string;
-  part_name?: string;
-  part_brand?: string;
-  part_model?: string;
-  part_year?: string;
-  part_chassis?: string;
-}
 
 const RequestDetails = () => {
   const { t } = useTranslation();
   const { show_key } = useParams();
-  const [requestData, setRequestData] = useState<RequestData | null>(null);
+  const [requestData, setRequestData] = useState<RequestType | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
   const [value, setValue] = React.useState(0);
@@ -130,52 +118,13 @@ const RequestDetails = () => {
                 minHeight: 0,
               }}
             >
-              <Card key={requestData.show_key} onClick={handleClickOpen} sx={{ flex: 1 }}>
-                <CardActionArea>
-                  {loadingImage && <CircularProgress />}
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={requestData.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
-                    alt={t('requestDetails.partImage')}
-                    onLoad={handleImageLoad}
-                    style={{ display: loadingImage ? 'none' : 'block' }}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {requestData.part_name ? requestData.part_name.toUpperCase() : ''}
-                    </Typography>
-                    <Divider />
-                    <List>
-                      <ListItem>
-                        <ListItemIcon>
-                          <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                        </ListItemIcon>
-                        <ListItemText primary={requestData.part_brand} secondary={t('requestDetails.partBrand')} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                        </ListItemIcon>
-                        <ListItemText primary={requestData.part_model} secondary={t('requestDetails.partModel')} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                        </ListItemIcon>
-                        <ListItemText primary={requestData.part_year} secondary={t('requestDetails.partYear')} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                        </ListItemIcon>
-                        <ListItemText primary={requestData.part_chassis} secondary={t('requestDetails.partChassis')} />
-                      </ListItem>
-                    </List>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-
+              <RequestCard key={requestData.show_key}
+                request={requestData}
+                sx={{ flex: 1, textDecoration: 'none' }}
+                onClick={handleClickOpen}
+                loadingImage={loadingImage}
+                onImageLoad={handleImageLoad}
+              />
               <Dialog
                 fullScreen={fullScreen}
                 open={open}
@@ -223,13 +172,11 @@ const RequestDetails = () => {
               <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                 {t('proposalsList.title')}
               </Typography>
-              {/* <Fab size="small" color="secondary" aria-label="add">
-                <AddIcon />
-              </Fab> */}
+
               <BottomNavigation
                 showLabels
                 value={value}
-                onChange={(event, newValue) => {
+                onChange={(_event, newValue) => {
                   setValue(newValue);
                 }}
               >

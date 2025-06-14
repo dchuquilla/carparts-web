@@ -1,19 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActionArea from '@mui/material/CardActionArea';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
+import { Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import RequestCard from '../components/RequestCard';
 
 const RequestList: React.FC = () => {
   const { t } = useTranslation();
@@ -57,46 +51,12 @@ const RequestList: React.FC = () => {
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
       }}>
         {requests.map((request: any) => (
-          <Card key={request.id} sx={{ maxWidth: 345, textDecoration: 'none' }}
-            onClick={(event) => handleCardClick(event, `/requests/${request.show_key}`)}>
-            <CardActionArea>
-              {loadingImage && <CircularProgress />}
-              <CardMedia
-                component="img"
-                height="140"
-                image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
-                alt="Part image"
-                onLoad={handleImageLoad}
-                style={{ display: loadingImage ? 'none' : 'block' }}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {request.part_name.toUpperCase()}
-                </Typography>
-                <Divider />
-                <List>
-                  <ListItem>
-                    <ListItemIcon>
-                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                    </ListItemIcon>
-                    <ListItemText primary={request.part_brand} secondary={t('requestDetails.partBrand')} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                    </ListItemIcon>
-                    <ListItemText primary={request.part_model} secondary={t('requestDetails.partModel')} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <KeyboardDoubleArrowRightTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center' } ]} />
-                    </ListItemIcon>
-                    <ListItemText primary={request.part_year} secondary={t('requestDetails.partYear')} />
-                  </ListItem>
-                </List>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          <RequestCard key={request.id} sx={{ maxWidth: 345, textDecoration: 'none' }}
+            request={request}
+            onClick={(event) => handleCardClick(event, `/requests/${request.show_key}`)}
+            loadingImage={loadingImage}
+            onImageLoad={handleImageLoad}
+          />
         ))}
       </Box>
     </div>
