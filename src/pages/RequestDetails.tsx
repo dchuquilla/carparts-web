@@ -3,16 +3,24 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
+import { Container, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, Fab } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+
+import AddIcon from '@mui/icons-material/Add';
+import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
+
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -38,6 +46,7 @@ const RequestDetails = () => {
   const [requestData, setRequestData] = useState<RequestData | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
+  const [value, setValue] = React.useState(0);
 
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -77,12 +86,54 @@ const RequestDetails = () => {
   }
 
   return (
-    <Container maxWidth={false}>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }}>
-              <Card key={requestData.show_key} onClick={handleClickOpen}>
+    <Container
+      maxWidth={false}
+      sx={{
+        height: 'calc(100vh - 120px)', // 120px AppBar height
+        pt: 0,
+        pb: 0,
+        // Adjust for AppBar height (120px default desktop, 56px mobile)
+        boxSizing: 'border-box',
+      }}
+    >
+      <Box
+        sx={{
+          height: 'calc(100vh - 120px)', // 120px AppBar height
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            flex: 1,
+            height: '100%',
+            alignItems: 'stretch',
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: { xs: 'auto', md: '100%' },
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                padding: 2,
+                marginTop: 2,
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: 0,
+              }}
+            >
+              <Card key={requestData.show_key} onClick={handleClickOpen} sx={{ flex: 1 }}>
                 <CardActionArea>
                   {loadingImage && <CircularProgress />}
                   <CardMedia
@@ -151,11 +202,44 @@ const RequestDetails = () => {
               </Dialog>
             </Paper>
           </Grid>
-          <Grid size={{ xs: 12, md: 8 }}>
-            <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }}>
-              <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
-                {t('proposals')}
+          <Grid
+            xs={12}
+            md={8}
+            item
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: { xs: 'auto', md: '100%' },
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                padding: 2,
+                marginTop: 2,
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: 0,
+              }}
+            >
+              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                {t('proposalsList.title')}
               </Typography>
+              {/* <Fab size="small" color="secondary" aria-label="add">
+                <AddIcon />
+              </Fab> */}
+              <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+              >
+                <BottomNavigationAction label={t('proposalsList.addProposal')} icon={<AddIcon />} />
+                {/* <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+                <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
+              </BottomNavigation>
             </Paper>
           </Grid>
         </Grid>
