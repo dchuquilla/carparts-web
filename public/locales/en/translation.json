@@ -5,7 +5,6 @@
   "request": "Request",
   "store": "Store",
   "stores": "Stores",
-  "proposal": "Proposal",
   "proposals": "Proposals",
   "login": "Login",
   "signUp": "Sign Up",
@@ -31,6 +30,17 @@
     "partYear": "Year",
     "partChassis": "Chassis",
     "partImage": "Part Image"
+  },
+  "proposalsList": {
+    "title": "Proposals List",
+    "search": "Search",
+    "filter": "Filter",
+    "status": "Status",
+    "date": "Date",
+    "actions": "Actions",
+    "viewDetails": "View Details",
+    "noProposals": "No proposals available",
+    "addProposal": "Add Proposal"
   },
   "storeForm": {
     "storeName": "Store Name",

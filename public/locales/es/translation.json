@@ -6,7 +6,6 @@
   "store": "Tienda",
   "stores": "Tiendas",
   "proposal": "Propuesta",
-  "proposals": "Propuestas",
   "login": "Iniciar sesión",
   "signUp": "Registrarse",
   "errors": {
@@ -31,6 +30,17 @@
     "partYear": "Año",
     "partChassis": "Chasis",
     "partImage": "Imagen del repuesto"
+  },
+  "proposalsList": {
+    "title": "Lista de propuestas",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "status": "Estado",
+    "date": "Fecha",
+    "actions": "Acciones",
+    "viewDetails": "Ver detalles",
+    "noProposals": "No hay propuestas disponibles",
+    "addProposal": "Agregar propuesta"
   },
   "storeForm": {
     "storeName": "Nombre de la tienda",
