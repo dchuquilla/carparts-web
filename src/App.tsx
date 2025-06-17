@@ -33,6 +33,7 @@ import SignIn from './pages/SignIn';
 import { Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { t } from 'i18next';
+import Profile from './pages/Profile';
 
 const drawerWidth = 240;
 
@@ -173,6 +174,11 @@ function App() {
     }
   };
 
+  const handleProfile = () => {
+    handleClose();
+    void navigate('/profile');
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -223,7 +229,7 @@ function App() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={() => { void handleLogOut(); }}>Logout</MenuItem>
               </Menu>
             </div>
@@ -293,8 +299,9 @@ function App() {
           <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />
           <Route path="/requests" element={<RequestList />} />
           <Route path="/requests/:show_key" element={<RequestDetails />} />
-          <Route path="/users/new" element={<UserForm />} />
+          <Route path="/users/new" element={<UserForm user={undefined} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/profile" element={<Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
         </Routes>
       </Box>
     </Box>

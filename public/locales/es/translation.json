@@ -61,7 +61,8 @@
       "storeAddress": "La dirección de la tienda es obligatoria",
       "phone": "El teléfono de la tienda es obligatorio",
       "email": "El correo electrónico es obligatorio",
-      "storeUi": "La interfaz de usuario de la tienda es obligatoria"
+      "storeUi": "La interfaz de usuario de la tienda es obligatoria",
+      "invalidEcuadorPhone": "Debe ser un número ecuatoriano válido (comenzando con +5939)"
     }
   },
   "sessionForm": {

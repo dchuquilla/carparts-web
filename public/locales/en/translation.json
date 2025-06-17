@@ -61,7 +61,8 @@
       "storeAddress": "Store address is required",
       "phone": "Store phone is required",
       "email": "Email is required",
-      "storeUi": "Store UI is required"
+      "storeUi": "Store UI is required",
+      "invalidEcuadorPhone": "Invalid Ecuador phone number format. It should start with +5939"
     }
   },
   "sessionForm": {

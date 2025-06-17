@@ -27,8 +27,13 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
         throw new Error(t('sessionForm.errors.invalidCredentials'));
       }
 
-      const data = (await response.json()) as { token: string };
-      localStorage.setItem('token', `Bearer ${data.token}`); // Save token with Bearer prefix
+      const authHeader = response.headers.get('authorization');
+      if (authHeader) {
+        localStorage.setItem('token', authHeader);
+      } else {
+        console.error('No token received from server');
+        throw new Error(t('sessionForm.errors.invalidCredentials'));
+      }
       setIsAuthenticated(true);
       void navigate('/');
     } catch (err) {
