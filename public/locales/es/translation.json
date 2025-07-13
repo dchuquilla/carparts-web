@@ -40,7 +40,13 @@
     "actions": "Acciones",
     "viewDetails": "Ver detalles",
     "noProposals": "No hay propuestas disponibles",
-    "addProposal": "Agregar propuesta"
+    "addProposal": "Agregar propuesta",
+    "details": "Detalles",
+    "createdAt": "Fecha",
+    "price": "Precio",
+    "notes": "Descripción",
+    "warrantyMonths": "Meses de garantía",
+    "deliveryTimeDays": "Días de entrega"
   },
   "storeForm": {
     "storeName": "Nombre de la tienda",

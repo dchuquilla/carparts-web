@@ -40,7 +40,13 @@
     "actions": "Actions",
     "viewDetails": "View Details",
     "noProposals": "No proposals available",
-    "addProposal": "Add Proposal"
+    "addProposal": "Add Proposal",
+    "details": "Details",
+    "createdAt": "Date",
+    "price": "Price",
+    "notes": "Description",
+    "warrantyMonths": "Warranty Months",
+    "deliveryTimeDays": "Delivery Time Days"
   },
   "storeForm": {
     "storeName": "Store Name",
