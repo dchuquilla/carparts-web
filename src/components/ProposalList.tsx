@@ -15,30 +15,22 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CircularProgress } from '@mui/material';
 
 function createData(
-  name: string,
-  calories: string,
-  fat: string,
-  carbs: string,
-  protein: string,
+  id: number,
+  created_at: string,
+  formatted_price: string,
+  notes: string,
+  warranty_months: number,
+  delivery_time_days: number
 ) {
   return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
+    id,
+    created_at,
+    formatted_price,
+    history: {
+      description: notes,
+      warranty: warranty_months,
+      delivery: delivery_time_days,
+    },
   };
 }
 
@@ -59,43 +51,32 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell>{row.created_at}</TableCell>
+        <TableCell align="right">{row.formatted_price}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Detalles
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Descripción</TableCell>
+                    <TableCell align="right">Garantía (meses)</TableCell>
+                    <TableCell align="right">Entrega (días)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.history.description}
+                    </TableCell>
+                    <TableCell align="right">{row.history.warranty}</TableCell>
+                    <TableCell align="right">{row.history.delivery}</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>
@@ -113,11 +94,11 @@ interface SignInProps {
 
 const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
   const [loading, setLoading] = useState(true);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<Array<ReturnType<typeof createData>>>([]);
   useEffect(() => {
     if(isAuthenticated) {
       const token = localStorage.getItem('token');
-      const prevRows = [];
+      const prevRows: Array<ReturnType<typeof createData>> = [];
       const fetchData = async () => {
         try {
           const res = await fetch(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${requestId}`, {
@@ -126,19 +107,31 @@ const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
             },
           });
           if (res.ok) {
-            const data = (await res.json()) as unknown;
-            data.forEach((proposal: any) => {
-              prevRows.push(
-                createData(
-                  proposal.notes,
-                  proposal.created_at,
-                  proposal.formatted_price,
-                  proposal.delivery_time_days,
-                  proposal.warranty_months,
-                )
-              );
-            });
-            setRows(prevRows);
+            const data = await res.json() as Array<{
+              id: number;
+              created_at: string;
+              formatted_price: string;
+              notes: string;
+              warranty_months: number;
+              delivery_time_days: number;
+            }>;
+            if (Array.isArray(data)) {
+              data.forEach((proposal) => {
+                prevRows.push(
+                  createData(
+                    proposal.id,
+                    proposal.created_at,
+                    proposal.formatted_price,
+                    proposal.notes,
+                    proposal.warranty_months,
+                    proposal.delivery_time_days
+                  )
+                );
+              });
+              setRows(prevRows);
+            } else {
+              setRows([]);
+            }
           }
         } catch (err) {
           console.error('Error fetching user profile:', err);
@@ -149,7 +142,7 @@ const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
       };
       void fetchData();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, requestId]);
 
   if (loading) {
     return <CircularProgress />;
@@ -162,16 +155,13 @@ const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Descripción</TableCell>
-            <TableCell align="right">Enviado</TableCell>
+            <TableCell>Enviado</TableCell>
             <TableCell align="right">Precio</TableCell>
-            <TableCell align="right">Días envío</TableCell>
-            <TableCell align="right">Meses garantía</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.created_at} row={row} />
           ))}
         </TableBody>
       </Table>
