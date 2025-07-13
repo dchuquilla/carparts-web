@@ -50,7 +50,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   };
 
   useEffect(() => {
-    const requestUrl = isAuthenticated
+    const token = localStorage.getItem('token');
+    const requestUrl = token
       ? `https://dev-api.quientiene.com/api/v1/requests/${show_key}`
       : `https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`
     axios.get(requestUrl)
@@ -62,7 +63,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         console.error('Error fetching request details:', error);
         setLoading(false);
       });
-  }, [isAuthenticated, show_key]);
+  }, [show_key]);
 
   const handleImageLoad = () => {
     setLoadingImage(false);
