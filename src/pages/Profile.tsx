@@ -15,11 +15,6 @@ const Profile: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-    if (!token) {
-      void navigate('/login');
-      return;
-    }
 
     const fetchUser = async () => {
       try {
