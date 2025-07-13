@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -36,6 +37,7 @@ function createData(
 
 
 function Row(props: { row: ReturnType<typeof createData> }) {
+  const { t } = useTranslation();
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -59,14 +61,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Detalles
+                {t('proposalsList.details')}
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Descripción</TableCell>
-                    <TableCell align="right">Garantía (meses)</TableCell>
-                    <TableCell align="right">Entrega (días)</TableCell>
+                    <TableCell>{t('proposalsList.notes')}</TableCell>
+                    <TableCell align="right">{t('proposalsList.warrantyMonths')}</TableCell>
+                    <TableCell align="right">{t('proposalsList.deliveryTimeDays')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -93,6 +95,7 @@ interface SignInProps {
 }
 
 const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState<Array<ReturnType<typeof createData>>>([]);
   useEffect(() => {
@@ -155,8 +158,8 @@ const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Enviado</TableCell>
-            <TableCell align="right">Precio</TableCell>
+            <TableCell>{t('proposalsList.createdAt')}</TableCell>
+            <TableCell align="right">{t('proposalsList.price')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
