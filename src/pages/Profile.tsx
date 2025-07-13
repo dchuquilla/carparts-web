@@ -1,8 +1,7 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import UserForm from './UserForm'; // Adjust path if needed
-import UserType from '../types/UserType'; // Adjust path if needed
+import UserForm from './UserForm';
+import UserType from '../types/UserType';
 
 interface SignInProps {
   isAuthenticated: boolean;
