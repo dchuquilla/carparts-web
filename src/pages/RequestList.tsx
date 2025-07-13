@@ -9,7 +9,12 @@ import { Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
 
-const RequestList: React.FC = () => {
+interface SignInProps {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (value: boolean) => void;
+}
+
+const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticated }) => {
   const { t } = useTranslation();
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
@@ -17,6 +22,9 @@ const RequestList: React.FC = () => {
   const [loadingImage, setLoadingImage] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+
     axios.get('https://dev-api.quientiene.com/api/v1/requests')
       .then(response => {
         setRequests(response.data);
@@ -26,7 +34,7 @@ const RequestList: React.FC = () => {
         console.error('There was an error fetching the requests!', error);
         setLoading(false);
       });
-  }, []);
+  }, [setIsAuthenticated]);
 
     const handleImageLoad = () => {
       setLoadingImage(false);
@@ -53,7 +61,7 @@ const RequestList: React.FC = () => {
         {requests.map((request: any) => (
           <RequestCard key={request.id} sx={{ maxWidth: 345, textDecoration: 'none' }}
             request={request}
-            onClick={(event) => handleCardClick(event, `/requests/${request.show_key}`)}
+            onClick={(event) => handleCardClick(event, `/requests/${isAuthenticated ? request.id : request.show_key}`)}
             loadingImage={loadingImage}
             onImageLoad={handleImageLoad}
           />

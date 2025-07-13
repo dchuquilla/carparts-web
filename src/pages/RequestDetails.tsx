@@ -25,8 +25,11 @@ import RequestType from '../types/RequestType';
 import RequestCard from '../components/RequestCard';
 import ProposalList from '../components/ProposalList';
 
+interface SignInProps {
+  isAuthenticated: boolean;
+}
 
-const RequestDetails = () => {
+const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const { t } = useTranslation();
   const { show_key } = useParams();
   const [requestData, setRequestData] = useState<RequestType | null>(null);
@@ -47,9 +50,11 @@ const RequestDetails = () => {
   };
 
   useEffect(() => {
-    axios.get(`https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`)
+    const requestUrl = isAuthenticated
+      ? `https://dev-api.quientiene.com/api/v1/requests/${show_key}`
+      : `https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`
+    axios.get(requestUrl)
       .then(response => {
-        console.log('Request details:', response.data);
         setRequestData(response.data);
         setLoading(false);
       })

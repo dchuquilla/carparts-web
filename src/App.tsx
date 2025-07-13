@@ -297,8 +297,8 @@ function App() {
         <DrawerHeader />
         <Routes>
           <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />
-          <Route path="/requests" element={<RequestList />} />
-          <Route path="/requests/:show_key" element={<RequestDetails />} />
+          <Route path="/requests" element={<RequestList isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/requests/:show_key" element={<RequestDetails isAuthenticated={isAuthenticated} />} />
           <Route path="/users/new" element={<UserForm user={undefined} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/profile" element={<Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
