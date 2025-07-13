@@ -62,7 +62,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         console.error('Error fetching request details:', error);
         setLoading(false);
       });
-  }, [show_key]);
+  }, [isAuthenticated, show_key]);
 
   const handleImageLoad = () => {
     setLoadingImage(false);
