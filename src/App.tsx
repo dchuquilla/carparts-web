@@ -136,7 +136,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
-  }, []);
+
+    if(!token && window.location.pathname !== '/signin') {
+      void navigate('/signin');
+      return;
+    }
+  }, [navigate]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
