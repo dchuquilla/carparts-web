@@ -180,9 +180,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    <ProposalList />
-                  </Typography>
+                  <ProposalList isAuthenticated={isAuthenticated} requestId={show_key} />
                 </CardContent>
                 <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
                   <BottomNavigation

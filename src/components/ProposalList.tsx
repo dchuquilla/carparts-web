@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -12,14 +12,14 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { CircularProgress } from '@mui/material';
 
 function createData(
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-  price: number,
+  calories: string,
+  fat: string,
+  carbs: string,
+  protein: string,
 ) {
   return {
     name,
@@ -27,7 +27,6 @@ function createData(
     fat,
     carbs,
     protein,
-    price,
     history: [
       {
         date: '2020-01-05',
@@ -43,13 +42,6 @@ function createData(
   };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
 
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
@@ -114,18 +106,67 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-export default function ProposalList() {
+interface SignInProps {
+  isAuthenticated: boolean;
+  requestId?: string;
+}
+
+const ProposalList:React.FC<SignInProps> = ({ isAuthenticated, requestId }) => {
+  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    if(isAuthenticated) {
+      const token = localStorage.getItem('token');
+      const prevRows = [];
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${requestId}`, {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          if (res.ok) {
+            const data = (await res.json()) as unknown;
+            data.forEach((proposal: any) => {
+              prevRows.push(
+                createData(
+                  proposal.notes,
+                  proposal.created_at,
+                  proposal.formatted_price,
+                  proposal.delivery_time_days,
+                  proposal.warranty_months,
+                )
+              );
+            });
+            setRows(prevRows);
+          }
+        } catch (err) {
+          console.error('Error fetching user profile:', err);
+        } finally {
+          setLoading(false);
+        }
+        setLoading(false);
+      };
+      void fetchData();
+    }
+  }, [isAuthenticated]);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table
+        aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Descripción</TableCell>
+            <TableCell align="right">Enviado</TableCell>
+            <TableCell align="right">Precio</TableCell>
+            <TableCell align="right">Días envío</TableCell>
+            <TableCell align="right">Meses garantía</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -136,4 +177,6 @@ export default function ProposalList() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default ProposalList;
