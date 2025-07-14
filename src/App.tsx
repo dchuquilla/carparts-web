@@ -28,7 +28,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import RequestList from './pages/RequestList';
 import RequestDetails from './pages/RequestDetails';
-import UserForm from './pages/UserForm';
+import UserForm from './components/UserForm';
 import SignIn from './pages/SignIn';
 import { Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';

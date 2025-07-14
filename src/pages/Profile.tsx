@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserForm from './UserForm';
+import UserForm from '../components/UserForm';
 import UserType from '../types/UserType';
 
 interface SignInProps {
