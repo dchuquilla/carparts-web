@@ -105,7 +105,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal }) =>  {
             fullWidth
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : 'Submit'}
+            {loading ? <CircularProgress size={24} /> : t('proposalForm.submit')}
           </Button>
         </Box>
       </form>
