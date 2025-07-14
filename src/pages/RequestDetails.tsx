@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 import AddIcon from '@mui/icons-material/Add';
 
@@ -24,6 +25,7 @@ import { useTheme } from '@mui/material/styles';
 import RequestType from '../types/RequestType';
 import RequestCard from '../components/RequestCard';
 import ProposalList from '../components/ProposalList';
+import ProposalForm from '../components/ProposalForm';
 
 interface SignInProps {
   isAuthenticated: boolean;
@@ -35,9 +37,11 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const [requestData, setRequestData] = useState<RequestType | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
-  const [value, setValue] = React.useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -47,6 +51,18 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
   };
 
   useEffect(() => {
@@ -186,13 +202,9 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
                   <BottomNavigation
                     showLabels
-                    value={value}
-                    onChange={(_event, newValue) => {
-                      setValue(newValue);
-                    }}
                     sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}
                   >
-                    <BottomNavigationAction label={t('proposalsList.addProposal')} icon={<AddIcon />} />
+                    <BottomNavigationAction onClick={handleOpenModal} label={t('proposalsList.addProposal')} icon={<AddIcon />} />
                   </BottomNavigation>
                 </CardActions>
               </Card>
@@ -200,6 +212,20 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
           </Grid>
         </Grid>
       </Box>
+
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {t('proposalForm.title')}
+          </Typography>
+          <ProposalForm />
+        </Box>
+      </Modal>
     </Container>
   );
 };
