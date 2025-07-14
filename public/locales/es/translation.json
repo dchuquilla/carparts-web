@@ -74,6 +74,7 @@
     "createStore": "Crear tienda",
     "storeCreated": "Tienda creada con éxito",
     "storeCreationFailed": "Error al crear la tienda",
+    "submit": "Enviar",
     "errors": {
       "password": "La contraseña es obligatoria",
       "passwordConfirm": "La confirmación de la contraseña es obligatoria",

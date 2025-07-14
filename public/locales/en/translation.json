@@ -74,6 +74,7 @@
     "createStore": "Create Store",
     "storeCreated": "Store created successfully",
     "storeCreationFailed": "Failed to create store",
+    "dubmit": "Submit",
     "errors": {
       "password": "Password is required",
       "passwordConfirm": "Password confirmation is required",
