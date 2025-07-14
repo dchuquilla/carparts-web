@@ -48,6 +48,21 @@
     "warrantyMonths": "Meses de garantía",
     "deliveryTimeDays": "Días de entrega"
   },
+  "proposalForm": {
+    "title": "Agregar propuesta",
+    "price": "Precio",
+    "notes": "Descripción",
+    "warrantyMonths": "Meses de garantía",
+    "deliveryTimeDays": "Días de entrega",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "errors": {
+      "price": "El precio es obligatorio",
+      "notes": "La descripción es obligatoria",
+      "warrantyMonths": "Los meses de garantía son obligatorios",
+      "deliveryTimeDays": "Los días de entrega son obligatorios"
+    }
+  },
   "storeForm": {
     "storeName": "Nombre de la tienda",
     "storeAddress": "Dirección de la tienda",

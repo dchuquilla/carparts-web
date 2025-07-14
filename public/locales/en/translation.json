@@ -48,6 +48,21 @@
     "warrantyMonths": "Warranty Months",
     "deliveryTimeDays": "Delivery Time Days"
   },
+  "proposalForm": {
+    "title": "Add Proposal",
+    "price": "Price",
+    "notes": "Description",
+    "warrantyMonths": "Warranty Months",
+    "deliveryTimeDays": "Delivery Time Days",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "errors": {
+      "price": "Price is required",
+      "notes": "Description is required",
+      "warrantyMonths": "Warranty months are required",
+      "deliveryTimeDays": "Delivery time days are required"
+    }
+  },
   "storeForm": {
     "storeName": "Store Name",
     "storeAddress": "Store Address",
