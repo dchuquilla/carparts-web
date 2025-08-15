@@ -1,8 +1,9 @@
 interface ProposalType {
   id?: number;
+  requestId?: number;
   createdAt?: string;
-  price: string;
-  notes: string;
+  price?: string | null;
+  notes?: string | null;
   warrantyMonths: number;
   deliveryTimeDays: number;
 }
