@@ -56,6 +56,8 @@
     "deliveryTimeDays": "Delivery Time Days",
     "submit": "Submit",
     "cancel": "Cancel",
+    "proposalCreationFailed": "Failed to create proposal",
+    "proposalCreated": "Proposal created successfully",
     "errors": {
       "price": "Price is required",
       "notes": "Description is required",
