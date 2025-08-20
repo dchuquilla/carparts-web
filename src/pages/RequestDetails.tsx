@@ -237,14 +237,17 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   </Typography>
                   <ProposalList proposals={proposals} />
                 </CardContent>
-                <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
-                  <BottomNavigation
-                    showLabels
-                    sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}
-                  >
-                    <BottomNavigationAction onClick={handleOpenModal} label={t('proposalsList.addProposal')} icon={<AddIcon />} />
-                  </BottomNavigation>
-                </CardActions>
+                {isAuthenticated && (
+                  <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
+                    <BottomNavigation
+                      showLabels
+                      sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+                    >
+                      <BottomNavigationAction onClick={handleOpenModal} label={t('proposalsList.addProposal')} 
+                      icon={<AddIcon />} />
+                    </BottomNavigation>
+                  </CardActions>
+                )}
               </Card>
             </Paper>
           </Grid>

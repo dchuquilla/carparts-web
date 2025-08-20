@@ -137,7 +137,10 @@ function App() {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
 
-    if(!token && window.location.pathname !== '/signin') {
+    const publicPaths = ['/signin', '/users/new'];
+    const requestPathRegex = /^\/requests\/[a-zA-Z0-9]+$/;
+
+    if (!token && (!publicPaths.includes(window.location.pathname) && !requestPathRegex.test(window.location.pathname))) {
       void navigate('/signin');
       return;
     }
@@ -292,7 +295,8 @@ function App() {
                   </HowToRegTwoToneIcon>
                   <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
                 </ListItemButton>
-              </ListItem></>
+              </ListItem>
+            </>
           )}
         </List>
       </Drawer>
