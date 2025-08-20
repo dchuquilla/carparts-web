@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import React, { useState } from 'react';
 import { Box, Button, TextField, CircularProgress, Alert } from '@mui/material';
 import { NumericFormat } from 'react-number-format';
@@ -5,12 +8,15 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import ProposalType from '../types/ProposalType';
+import CreateProposalData from '../types/CreateProposalData';
 
 interface ProposalFormProps {
   proposal?: ProposalType;
+  setProposals?: (proposals: Array<ReturnType<typeof CreateProposalData>>) => void;
+  setOpenModal: (open: boolean) => void;
 }
 
-const ProposalForm: React.FC<ProposalFormProps> = ({ proposal }) =>  {
+const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, setProposals, setOpenModal }) =>  {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<ProposalType>({
     price: proposal?.price ?? '',
@@ -35,7 +41,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal }) =>  {
     const token = localStorage.getItem('token');
 
     try {
-      await axios.post(
+      const proposalResponse = await axios.post(
         'https://dev-api.quientiene.com/api/v1/proposals', {
           proposal: {
             request_id: proposal?.requestId,
@@ -51,13 +57,24 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal }) =>  {
           }
         }
       );
+      const newProposal = CreateProposalData(
+        proposalResponse.data.id,
+        proposalResponse.data.created_at,
+        proposalResponse.data.formatted_price,
+        proposalResponse.data.notes,
+        proposalResponse.data.warranty_months,
+        proposalResponse.data.delivery_time_days
+      );
+      setProposals((prev: Array<ReturnType<typeof CreateProposalData>>) => [...prev, newProposal]);
       setSuccess(true);
       setFormData({
         price: '',
         notes: '',
-        warrantyMonths: 0,
-        deliveryTimeDays: 0,
+        description: '',
+        warrantyMonths: 1,
+        deliveryTimeDays: 1,
       });
+      setOpenModal(false)
     } catch (err) {
       setError(t('proposalForm.proposalCreationFailed'));
       console.error(err);
@@ -132,6 +149,15 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal }) =>  {
             disabled={loading}
           >
             {loading ? <CircularProgress size={24} /> : t('proposalForm.submit')}
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={() => setOpenModal(false)}
+          >
+            {t('proposalForm.cancel')}
           </Button>
         </Box>
       </form>

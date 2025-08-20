@@ -261,13 +261,14 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {t('proposalForm.title')}
           </Typography>
-          <ProposalForm proposal={{
-            requestId: show_key ? parseInt(show_key, 10) : undefined,
-            price: null, 
-            notes: null, 
-            warrantyMonths: 1,
-            deliveryTimeDays: 1
-          }} />
+          <ProposalForm setProposals={setProposals} setOpenModal={setOpenModal}
+            proposal={{
+              requestId: show_key ? parseInt(show_key, 10) : undefined,
+              price: null, 
+              notes: null, 
+              warrantyMonths: 1,
+              deliveryTimeDays: 1
+            }} />
         </Box>
       </Modal>
     </Container>
