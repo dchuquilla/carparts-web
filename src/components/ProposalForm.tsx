@@ -5,7 +5,6 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import ProposalType from '../types/ProposalType';
-import { Html } from '@mui/icons-material';
 
 interface ProposalFormProps {
   proposal?: ProposalType;
