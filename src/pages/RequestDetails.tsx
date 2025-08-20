@@ -26,6 +26,7 @@ import RequestType from '../types/RequestType';
 import RequestCard from '../components/RequestCard';
 import ProposalList from '../components/ProposalList';
 import ProposalForm from '../components/ProposalForm';
+import CreateProposalData from '../types/CreateProposalData';
 
 interface SignInProps {
   isAuthenticated: boolean;
@@ -44,6 +45,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
+
+  const [proposals, setProposals] = useState<Array<ReturnType<typeof CreateProposalData>>>([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,7 +82,55 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         console.error('Error fetching request details:', error);
         setLoading(false);
       });
-  }, [show_key]);
+
+    if(isAuthenticated) {
+      const token = localStorage.getItem('token');
+      const prevRows: Array<ReturnType<typeof CreateProposalData>> = [];
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${show_key}`, {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          if (res.ok) {
+            const data = await res.json() as Array<{
+              id: number;
+              created_at: string;
+              formatted_price: string;
+              notes: string;
+              warranty_months: number;
+              delivery_time_days: number;
+            }>;
+            if (Array.isArray(data)) {
+              data.forEach((proposal) => {
+                prevRows.push(
+                  CreateProposalData(
+                    proposal.id,
+                    proposal.created_at,
+                    proposal.formatted_price,
+                    proposal.notes,
+                    proposal.warranty_months,
+                    proposal.delivery_time_days
+                  )
+                );
+              });
+              setProposals(prevRows);
+            } else {
+              setProposals([]);
+            }
+          }
+        } catch (err) {
+          console.error('Error fetching user profile:', err);
+        } finally {
+          setLoading(false);
+        }
+        setLoading(false);
+      };
+      void fetchData();
+    }
+
+  }, [isAuthenticated, show_key]);
 
   const handleImageLoad = () => {
     setLoadingImage(false);
@@ -94,8 +145,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   }
 
   return (
-    <Container
-      maxWidth={false}
+    <Container maxWidth={false}
       sx={{
         height: 'calc(100vh - 120px)', // 120px AppBar height
         pt: 0,
@@ -111,27 +161,21 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
           flexDirection: 'column',
         }}
       >
-        <Grid
-          container
-          spacing={2}
+        <Grid container spacing={2}
           sx={{
             flex: 1,
             height: '100%',
             alignItems: 'stretch',
           }}
         >
-          <Grid
-            item
-            xs={12}
-            md={4}
+          <Grid item xs={12} md={4}
             sx={{
               display: 'flex',
               flexDirection: 'column',
               height: { xs: 'auto', md: '100%' },
             }}
           >
-            <Paper
-              elevation={3}
+            <Paper elevation={3}
               sx={{
                 padding: 2,
                 marginTop: 2,
@@ -141,17 +185,15 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 minHeight: 0,
               }}
             >
-              <RequestCard key={requestData.show_key}
-                request={requestData}
-                sx={{ flex: 1, textDecoration: 'none' }}
-                onClick={handleClickOpen}
+              <RequestCard key={requestData.show_key} request={requestData} onClick={handleClickOpen}
                 loadingImage={loadingImage}
                 onImageLoad={handleImageLoad}
+                sx={{
+                  flex: 1,
+                  textDecoration: 'none'
+                }}
               />
-              <Dialog
-                fullScreen={fullScreen}
-                open={open}
-                onClose={handleClose}
+              <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
               >
                 <DialogContent>
@@ -171,18 +213,14 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               </Dialog>
             </Paper>
           </Grid>
-          <Grid
-            xs={12}
-            md={8}
-            item
+          <Grid xs={12} md={8} item
             sx={{
               display: 'flex',
               flexDirection: 'column',
               height: { xs: 'auto', md: '100%' },
             }}
           >
-            <Paper
-              elevation={3}
+            <Paper elevation={3}
               sx={{
                 padding: 2,
                 marginTop: 2,
@@ -197,7 +235,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>
-                  <ProposalList isAuthenticated={isAuthenticated} requestId={show_key} />
+                  <ProposalList proposals={proposals} />
                 </CardContent>
                 <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
                   <BottomNavigation
