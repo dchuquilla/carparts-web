@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
 import { Container, CircularProgress, Card, CardContent, CardActions } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -73,7 +73,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
     const requestUrl = token
       ? `https://dev-api.quientiene.com/api/v1/requests/${show_key}`
       : `https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`
-    axios.get(requestUrl)
+    axiosInstance.get(requestUrl)
       .then(response => {
         setRequestData(response.data);
         setLoading(false);
@@ -88,13 +88,13 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
       const prevRows: Array<ReturnType<typeof CreateProposalData>> = [];
       const fetchData = async () => {
         try {
-          const res = await fetch(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${show_key}`, {
+          const res = await axiosInstance.get(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${show_key}`, {
             headers: {
               Authorization: `${token}`,
             },
           });
-          if (res.ok) {
-            const data = await res.json() as Array<{
+          if (res.status === 200) {
+            const data = res.data as Array<{
               id: number;
               created_at: string;
               formatted_price: string;

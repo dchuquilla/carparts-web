@@ -6,7 +6,7 @@ import { Box, Button, TextField, CircularProgress, Alert } from '@mui/material';
 import { NumericFormat } from 'react-number-format';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
 import ProposalType from '../types/ProposalType';
 import CreateProposalData from '../types/CreateProposalData';
 
@@ -41,7 +41,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, setProposals, set
     const token = localStorage.getItem('token');
 
     try {
-      const proposalResponse = await axios.post(
+      const proposalResponse = await axiosInstance.post(
         'https://dev-api.quientiene.com/api/v1/proposals', {
           proposal: {
             request_id: proposal?.requestId,

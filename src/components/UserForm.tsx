@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, CircularProgress, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
 import UserType from '../types/UserType';
 
 interface UserFormProps {
@@ -40,7 +40,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
     }
 
     try {
-      await axios.post('https://dev-api.quientiene.com/users', {user: {
+      await axiosInstance.post('https://dev-api.quientiene.com/users', {user: {
         email: formData.email,
         password: formData.password,
         phone: formData.phone,

@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axiosInstance from '../api/axiosInstance';
 import { Box, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
@@ -25,7 +25,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
 
-    axios.get('https://dev-api.quientiene.com/api/v1/requests')
+    axiosInstance.get('https://dev-api.quientiene.com/api/v1/requests')
       .then(response => {
         setRequests(response.data);
         setLoading(false);

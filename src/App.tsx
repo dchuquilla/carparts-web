@@ -34,6 +34,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { t } from 'i18next';
 import Profile from './pages/Profile';
+import axiosInstance from './api/axiosInstance';
 
 const drawerWidth = 240;
 
@@ -164,9 +165,8 @@ function App() {
 
   const handleLogOut = async () => {
     try {
-      await fetch('https://dev-api.quientiene.com/users/sign_out', {
-        method: 'DELETE',
-        credentials: 'include',
+      await axiosInstance.delete('https://dev-api.quientiene.com/users/sign_out', {
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Box, Typography } from '@mui/material';
+import axiosInstance from '../api/axiosInstance';
 
 interface SignInProps {
   setIsAuthenticated: (value: boolean) => void;
@@ -17,17 +18,16 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://dev-api.quientiene.com/users/sign_in', {
-        method: 'POST',
+      const response = await axiosInstance.post('https://dev-api.quientiene.com/users/sign_in', {
+        user: { email, password },
+      }, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({user: { email, password }}),
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error(t('sessionForm.errors.invalidCredentials'));
       }
-
-      const authHeader = response.headers.get('authorization');
+      const authHeader = response.headers.authorization as string | undefined;
       if (authHeader) {
         localStorage.setItem('token', authHeader);
       } else {

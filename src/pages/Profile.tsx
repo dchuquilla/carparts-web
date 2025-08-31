@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from '../components/UserForm';
 import UserType from '../types/UserType';
+import axiosInstance from '../api/axiosInstance';
 
 interface SignInProps {
   isAuthenticated: boolean;
@@ -19,13 +20,13 @@ const Profile: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
     const fetchUser = async () => {
       try {
 
-        const res = await fetch('https://dev-api.quientiene.com/api/v1/profile', {
+        const res = await axiosInstance.get('https://dev-api.quientiene.com/api/v1/profile', {
           headers: {
             Authorization: `${token}`,
           },
         });
-        if (res.ok) {
-          const data = (await res.json()) as unknown;
+        if (res.status === 200) {
+          const data = res.data as unknown;
           // Optionally, add runtime validation for data here
           const userData = data as {
             email: string;
