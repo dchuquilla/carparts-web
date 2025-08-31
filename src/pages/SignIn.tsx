@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, TextField, Box, Typography } from '@mui/material';
 import axiosInstance from '../api/axiosInstance';
 
@@ -14,7 +14,11 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); // <-- get location
 
+  // Parse redirect_to from query string
+  const params = new URLSearchParams(location.search);
+  const redirectTo = params.get('redirect_to') || '/';
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -35,7 +39,7 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
         throw new Error(t('sessionForm.errors.invalidCredentials'));
       }
       setIsAuthenticated(true);
-      void navigate('/');
+      void navigate(redirectTo);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

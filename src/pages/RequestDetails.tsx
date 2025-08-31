@@ -141,7 +141,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   }
 
   if (!requestData) {
-    window.location.href = '/signin?redirect_to=' + encodeURIComponent(window.location.href);
+    const redirectUri = '/signin?redirect_to=' + encodeURIComponent(window.location.pathname + window.location.search);
+    window.location.href = redirectUri;
   }
 
   return (
