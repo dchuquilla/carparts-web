@@ -186,21 +186,23 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 minHeight: 0,
               }}
             >
-              <RequestCard key={requestData.show_key} request={requestData} onClick={handleClickOpen}
-                loadingImage={loadingImage}
-                onImageLoad={handleImageLoad}
-                sx={{
-                  flex: 1,
-                  textDecoration: 'none'
-                }}
-              />
+              {requestData && (
+                <RequestCard key={requestData.show_key} request={requestData} onClick={handleClickOpen}
+                  loadingImage={loadingImage}
+                  onImageLoad={handleImageLoad}
+                  sx={{
+                    flex: 1,
+                    textDecoration: 'none'
+                  }}
+                />
+              )}
               <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
               >
                 <DialogContent>
                   {loadingImage && <CircularProgress />}
                   <img
-                    src={requestData.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
+                    src={requestData?.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
                     alt={t('requestDetails.partImage')}
                     style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
                     onLoad={handleImageLoad}
