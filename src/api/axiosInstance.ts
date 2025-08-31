@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://dev-api.quientiene.com/api/v1', // Replace with your API base URL
+  baseURL: 'https://dev-api.quientiene.com',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,14 +9,28 @@ const axiosInstance = axios.create({
 
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
-  (response) => response, // Pass through successful responses
+  (response) => response,
   (error: import('axios').AxiosError) => {
     if (error.response?.status === 401) {
-      // Redirect to the sign-in page
-      console.error('AXIOS API error:', error.response?.status, error);
+      const currentUrl = window.location.href;
+      const requestPrefix = 'https://dev-webs.quientiene.com/requests/';
+      // Regex: alphanumeric token, 8-64 chars (adjust as needed)
+      const tokenRegex = /^[a-zA-Z0-9]{8,64}$/;
+      if (
+        currentUrl.startsWith(requestPrefix)
+      ) {
+        const token = currentUrl.substring(requestPrefix.length);
+        if (tokenRegex.test(token)) {
+          // Valid request URL with token, do NOT redirect
+          return Promise.reject(error);
+        } else {
+          window.location.href = '/signin';
+        }
+      }
+      // Otherwise, redirect
       window.location.href = '/signin';
     }
-    return Promise.reject(error); // Pass the error to the caller
+    return Promise.reject(error);
   }
 );
 
