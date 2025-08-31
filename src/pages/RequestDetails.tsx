@@ -141,7 +141,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   }
 
   if (!requestData) {
-    return <Typography variant="h6">{t('requestDetails.notDetailsFound')}</Typography>;
+    window.location.href = '/signin?redirect_to=' + encodeURIComponent(window.location.href);
   }
 
   return (
