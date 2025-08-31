@@ -51,7 +51,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData> }) {
                 <TableBody>
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
-                      {row.history.description}
+                      {row.history.notes}
                     </TableCell>
                     <TableCell align="right">{row.history.warranty}</TableCell>
                     <TableCell align="right">{row.history.delivery}</TableCell>

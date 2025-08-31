@@ -11,12 +11,13 @@ import ProposalType from '../types/ProposalType';
 import CreateProposalData from '../types/CreateProposalData';
 
 interface ProposalFormProps {
+  previousProposals?: Array<ReturnType<typeof CreateProposalData>>;
   proposal?: ProposalType;
   setProposals?: (proposals: Array<ReturnType<typeof CreateProposalData>>) => void;
   setOpenModal: (open: boolean) => void;
 }
 
-const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, setProposals, setOpenModal }) =>  {
+const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals, setProposals, setOpenModal }) =>  {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<ProposalType>({
     price: proposal?.price ?? '',
@@ -28,7 +29,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, setProposals, set
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -65,12 +66,15 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, setProposals, set
         proposalResponse.data.warranty_months,
         proposalResponse.data.delivery_time_days
       );
-      setProposals((prev: Array<ReturnType<typeof CreateProposalData>>) => [...prev, newProposal]);
+      const prevProposal: Array<ReturnType<typeof CreateProposalData>> = previousProposals || [];
+      const theProposal = [...prevProposal, newProposal]
+      if (setProposals) {
+        setProposals(theProposal);
+      }
       setSuccess(true);
       setFormData({
         price: '',
         notes: '',
-        description: '',
         warrantyMonths: 1,
         deliveryTimeDays: 1,
       });

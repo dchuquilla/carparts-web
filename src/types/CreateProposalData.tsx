@@ -11,7 +11,7 @@ function CreateProposalData(
     created_at,
     formatted_price,
     history: {
-      description: notes,
+      notes: notes,
       warranty: warranty_months,
       delivery: delivery_time_days,
     },

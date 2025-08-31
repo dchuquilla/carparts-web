@@ -261,20 +261,24 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         open={openModal}
         onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-describedby="modal-modal-notes"
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {t('proposalForm.title')}
           </Typography>
-          <ProposalForm setProposals={setProposals} setOpenModal={setOpenModal}
+          <ProposalForm 
+            previousProposals={proposals}
+            setProposals={setProposals} 
+            setOpenModal={setOpenModal}
             proposal={{
               requestId: show_key ? parseInt(show_key, 10) : undefined,
               price: null, 
               notes: null, 
               warrantyMonths: 1,
               deliveryTimeDays: 1
-            }} />
+            }} 
+          />
         </Box>
       </Modal>
     </Container>
