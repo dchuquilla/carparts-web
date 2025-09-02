@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -76,6 +78,19 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
     axiosInstance.get(requestUrl)
       .then(response => {
         setRequestData(response.data);
+        if(response.data?.proposals) {
+          setProposals(
+            response.data.proposals.map((proposal: { notes: string; warranty_months: number; delivery_time_days: number; created_at: string; formatted_created_at: string; }) => ({
+              ...proposal,
+              created_at: proposal.formatted_created_at, // Use formatted_created_at here
+              history: {
+                notes: proposal.notes,
+                warranty: proposal.warranty_months,
+                delivery: proposal.delivery_time_days,
+              },
+            }))
+          );
+        }
         setLoading(false);
       })
       .catch(error => {

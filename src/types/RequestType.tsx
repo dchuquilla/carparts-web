@@ -6,5 +6,13 @@ interface RequestType {
   part_model?: string;
   part_year?: string;
   part_chassis?: string;
+  proposals?: Array<{
+    id: number;
+    created_at: string;
+    formatted_price: string;
+    notes: string;
+    warranty_months: number;
+    delivery_time_days: number;
+  }>;
 }
 export default RequestType;
