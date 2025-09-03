@@ -62,14 +62,20 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
             {props.isAuthenticated ? (
             <>
               <Button onClick={() => handleDeleteProposal(row.id)}>
-                Eliminar
+                {t('proposalsList.delete')}
               </Button>
             </>
             ) : (
             <>
-              <Button onClick={() => handleApproveProposal(row.id)}>
-                Aprobar
-              </Button>
+              {row.status === 'accepted' ? (
+                <Button disabled>
+                  {t('proposalsList.accepted')}
+                </Button>
+              ) : (
+                <Button onClick={() => handleApproveProposal(row.id)}>
+                  {t('proposalsList.accept')}
+                </Button>
+              )}
             </>
             )}
         </TableCell>

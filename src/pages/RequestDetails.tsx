@@ -116,6 +116,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               notes: string;
               warranty_months: number;
               delivery_time_days: number;
+              status: string;
             }>;
             if (Array.isArray(data)) {
               data.forEach((proposal) => {
@@ -126,7 +127,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                     proposal.formatted_price,
                     proposal.notes,
                     proposal.warranty_months,
-                    proposal.delivery_time_days
+                    proposal.delivery_time_days,
+                    proposal.status
                   )
                 );
               });

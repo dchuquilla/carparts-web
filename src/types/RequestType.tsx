@@ -13,6 +13,7 @@ interface RequestType {
     notes: string;
     warranty_months: number;
     delivery_time_days: number;
+    status: string;
   }>;
 }
 export default RequestType;

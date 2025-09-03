@@ -64,7 +64,8 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
         proposalResponse.data.formatted_price,
         proposalResponse.data.notes,
         proposalResponse.data.warranty_months,
-        proposalResponse.data.delivery_time_days
+        proposalResponse.data.delivery_time_days,
+        proposalResponse.data.status
       );
       const prevProposal: Array<ReturnType<typeof CreateProposalData>> = previousProposals || [];
       const theProposal = [...prevProposal, newProposal]

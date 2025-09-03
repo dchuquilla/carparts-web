@@ -46,7 +46,10 @@
     "price": "Precio",
     "notes": "Descripción",
     "warrantyMonths": "Meses de garantía",
-    "deliveryTimeDays": "Días de entrega"
+    "deliveryTimeDays": "Días de entrega",
+    "accept": "Aceptar",
+    "accepted": "Aceptada",
+    "delete": "Eliminar"
   },
   "proposalForm": {
     "title": "Agregar propuesta",
