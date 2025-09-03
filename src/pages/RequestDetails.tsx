@@ -253,7 +253,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>
-                  <ProposalList proposals={proposals} />
+                  <ProposalList proposals={proposals} isAuthenticated={isAuthenticated} />
                 </CardContent>
                 {isAuthenticated && (
                   <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>

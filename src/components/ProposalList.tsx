@@ -13,9 +13,10 @@ import ProposalRow from './ProposalRow';
 
 interface ProposalProps {
   proposals: Array<ReturnType<typeof CreateProposalData>>;
+  isAuthenticated: boolean;
 }
 
-const ProposalList:React.FC<ProposalProps> = ({ proposals }) => {
+const ProposalList:React.FC<ProposalProps> = ({ proposals, isAuthenticated }) => {
   const { t } = useTranslation();
 
   if (!proposals) {
@@ -31,11 +32,12 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals }) => {
             <TableCell />
             <TableCell>{t('proposalsList.createdAt')}</TableCell>
             <TableCell align="right">{t('proposalsList.price')}</TableCell>
+            <TableCell> {t('proposalsList.actions')} </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {proposals.map((proposal) => (
-            <ProposalRow key={proposal.created_at} row={proposal} />
+            <ProposalRow key={proposal.created_at} row={proposal} isAuthenticated={isAuthenticated} />
           ))}
         </TableBody>
       </Table>

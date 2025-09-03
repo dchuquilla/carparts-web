@@ -12,8 +12,34 @@ import TableCell from '@mui/material/TableCell';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
+import Button from '@mui/material/Button';
+import axiosInstance from '../api/axiosInstance';
 
-function ProposalRow(props: { row: ReturnType<typeof CreateProposalData> }) {
+function handleApproveProposal(proposalId: number) {
+  // Implement the logic to approve the proposal
+  console.log("approving:", proposalId);
+  axiosInstance.patch(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}/accept`)
+    .then(response => {
+      console.log("Proposal approved:", response.data);
+    })
+    .catch(error => {
+      console.error("Error approving proposal:", error);
+    });
+}
+
+function handleDeleteProposal(proposalId: number) {
+  // Implement the logic to reject the proposal
+  console.log("deleting:", proposalId);
+  axiosInstance.delete(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}`)
+    .then(response => {
+      console.log("Proposal rejected:", response.data);
+    })
+    .catch(error => {
+      console.error("Error rejecting proposal:", error);
+    });
+}
+
+function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuthenticated: boolean }) {
   const { t } = useTranslation();
   const { row } = props;
   const [open, setOpen] = useState(false);
@@ -32,6 +58,21 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData> }) {
         </TableCell>
         <TableCell>{row.created_at}</TableCell>
         <TableCell align="right">{row.formatted_price}</TableCell>
+        <TableCell align="right">
+            {props.isAuthenticated ? (
+            <>
+              <Button onClick={() => handleDeleteProposal(row.id)}>
+                Eliminar
+              </Button>
+            </>
+            ) : (
+            <>
+              <Button onClick={() => handleApproveProposal(row.id)}>
+                Aprobar
+              </Button>
+            </>
+            )}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
