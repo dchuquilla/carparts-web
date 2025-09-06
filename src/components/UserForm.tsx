@@ -43,7 +43,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       await axiosInstance.post('https://dev-api.quientiene.com/users', {user: {
         email: formData.email,
         password: formData.password,
-        phone: formData.phone,
+        phone: formData.phone.replace(/\+/g, ''),
         store_name: formData.storeName,
         store_uid: formData.storeUid,
       }});
