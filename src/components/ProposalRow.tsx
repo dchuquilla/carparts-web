@@ -4,6 +4,9 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import ShoppingBasketTwoToneIcon from '@mui/icons-material/ShoppingBasketTwoTone';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Typography from '@mui/material/Typography';
 import CreateProposalData from '../types/CreateProposalData';
@@ -47,7 +50,8 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+        <TableCell
+          sx={{ padding: '0px 3px' }}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -56,24 +60,24 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell>{row.created_at}</TableCell>
-        <TableCell align="right">{row.formatted_price}</TableCell>
-        <TableCell align="right">
+        <TableCell sx={{ padding: '0px 3px' }}>{row.formatted_created_at}</TableCell>
+        <TableCell sx={{ padding: '0px 3px' }} align="right">{row.formatted_price}</TableCell>
+        <TableCell sx={{ padding: '0px 3px' }} align="right">
             {props.isAuthenticated ? (
             <>
               <Button onClick={() => handleDeleteProposal(row.id)}>
-                {t('proposalsList.delete')}
+                <DeleteForeverTwoToneIcon />
               </Button>
             </>
             ) : (
             <>
               {row.status === 'accepted' ? (
                 <Button disabled>
-                  {t('proposalsList.accepted')}
+                  <ShoppingBasketTwoToneIcon />
                 </Button>
               ) : (
                 <Button onClick={() => handleApproveProposal(row.id)}>
-                  {t('proposalsList.accept')}
+                  <ShoppingCartTwoToneIcon />
                 </Button>
               )}
             </>
@@ -81,7 +85,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: '0px 3px' }} style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">

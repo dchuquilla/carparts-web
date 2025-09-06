@@ -41,14 +41,15 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [proposals, setProposals] = useState<Array<ReturnType<typeof CreateProposalData>>>([]);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
+  const token = localStorage.getItem('token');
 
-  const [proposals, setProposals] = useState<Array<ReturnType<typeof CreateProposalData>>>([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,7 +72,6 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const requestUrl = token
       ? `https://dev-api.quientiene.com/api/v1/requests/${show_key}`
       : `https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`
@@ -113,6 +113,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               id: number;
               created_at: string;
               formatted_price: string;
+              formatted_created_at: string;
               notes: string;
               warranty_months: number;
               delivery_time_days: number;
@@ -125,6 +126,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                     proposal.id,
                     proposal.created_at,
                     proposal.formatted_price,
+                    proposal.formatted_created_at,
                     proposal.notes,
                     proposal.warranty_months,
                     proposal.delivery_time_days,
@@ -147,7 +149,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
       void fetchData();
     }
 
-  }, [isAuthenticated, show_key]);
+  }, [isAuthenticated, token, show_key]);
 
   const handleImageLoad = () => {
     setLoadingImage(false);
@@ -163,7 +165,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   }
 
   return (
-    <Container maxWidth={false}
+    <Container
       sx={{
         height: 'calc(100vh - 120px)', // 120px AppBar height
         pt: 0,
@@ -184,6 +186,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
             flex: 1,
             height: '100%',
             alignItems: 'stretch',
+            width: '100%',
           }}
         >
           <Grid item xs={12} md={4}
@@ -250,13 +253,14 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 minHeight: 0,
               }}
             >
-                <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+              <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, padding: 1 }}>
                 <CardContent sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>
                   <ProposalList proposals={proposals} isAuthenticated={isAuthenticated} />
                 </CardContent>
+
                 {isAuthenticated && (
                   <CardActions sx={{ mt: 'auto', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f7fa' }}>
                     <BottomNavigation

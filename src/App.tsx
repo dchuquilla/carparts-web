@@ -302,7 +302,7 @@ function App() {
       </Drawer>
 
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: { xs: 0.5, sm: 3 } }}>
         <DrawerHeader />
         <Routes>
           <Route path="/" element={<Typography variant="h5">Bienvenido a la aplicación</Typography>} />

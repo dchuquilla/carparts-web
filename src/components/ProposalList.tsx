@@ -26,13 +26,14 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, isAuthenticated }) =>
   return (
     <TableContainer component={Paper}>
       <Table
-        aria-label="collapsible table">
+        aria-label="collapsible table"
+        sx={{ width: 'calc(100% - 48px)' }}>
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell>{t('proposalsList.createdAt')}</TableCell>
             <TableCell align="right">{t('proposalsList.price')}</TableCell>
-            <TableCell> {t('proposalsList.actions')} </TableCell>
+            <TableCell> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

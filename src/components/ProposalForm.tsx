@@ -62,6 +62,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
         proposalResponse.data.id,
         proposalResponse.data.created_at,
         proposalResponse.data.formatted_price,
+        proposalResponse.data.formatted_created_at,
         proposalResponse.data.notes,
         proposalResponse.data.warranty_months,
         proposalResponse.data.delivery_time_days,
