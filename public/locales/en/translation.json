@@ -22,14 +22,15 @@
     "noRequests": "No requests available"
   },
   "requestDetails": {
-    "title": "Request Details",
+    "title": "Request",
     "notDetailsFound": "No request details found.",
     "partName": "Part Name",
     "partBrand": "Brand",
     "partModel": "Model",
     "partYear": "Year",
     "partChassis": "Chassis",
-    "partImage": "Part Image"
+    "partImage": "Part Image",
+    "createdAt": "Date"
   },
   "proposalsList": {
     "title": "Proposals List",

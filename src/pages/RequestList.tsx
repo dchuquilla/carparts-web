@@ -53,7 +53,11 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
 
   return (
     <div>
-      <h1>{t('requestsList.title')}</h1>
+      <h1>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {t('requestsList.title')}
+        </Box>
+      </h1>
       <Box sx={{
         width: '100%', display: 'grid', gap: 2,
         gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',

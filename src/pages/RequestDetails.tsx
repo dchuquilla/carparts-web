@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
 import { Container, CircularProgress, Card, CardContent, CardActions } from '@mui/material';
@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -174,6 +175,29 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         boxSizing: 'border-box',
       }}
     >
+
+      <h1>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button
+          variant="outlined"
+          color="primary"
+          component={Link}
+          to="/requests"
+          sx={{
+            borderRadius: '50%',
+            minWidth: '40px',
+            width: '40px',
+            height: '40px',
+            padding: '0',
+            margin: '0 5px 0 0',
+          }}
+          >
+            <ArrowBackIosRoundedIcon />
+          </Button>
+
+          {t('requestDetails.title')}
+        </Box>
+      </h1>
       <Box
         sx={{
           height: 'calc(100vh - 120px)', // 120px AppBar height
@@ -236,16 +260,17 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               </Dialog>
             </Paper>
           </Grid>
-          <Grid xs={12} md={8} item
+          <Grid item
             sx={{
               display: 'flex',
               flexDirection: 'column',
               height: { xs: 'auto', md: '100%' },
+              padding: { xs: 1, md: 2 },
             }}
           >
             <Paper elevation={3}
               sx={{
-                padding: 2,
+                padding: {xs: 1, md: 2},
                 marginTop: 2,
                 flex: 1,
                 display: 'flex',
@@ -253,8 +278,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 minHeight: 0,
               }}
             >
-              <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, padding: 1 }}>
-                <CardContent sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+              <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, padding: { xs: 1, md: 2 } }}>
+                <CardContent sx={{ flex: 1, minHeight: 0, overflow: 'auto', padding: { xs: 1, md: 2 } }}>
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>

@@ -22,14 +22,15 @@
     "noRequests": "No hay solicitudes disponibles"
   },
   "requestDetails": {
-    "title": "Detalles de la solicitud",
+    "title": "Solicitud",
     "notDetailsFound": "No se encontraron detalles de la solicitud.",
     "partName": "Nombre del repuesto",
     "partBrand": "Marca",
     "partModel": "Modelo",
     "partYear": "Año",
     "partChassis": "Chasis",
-    "partImage": "Imagen del repuesto"
+    "partImage": "Imagen del repuesto",
+    "createdAt": "Fecha"
   },
   "proposalsList": {
     "title": "Lista de propuestas",

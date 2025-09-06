@@ -27,7 +27,7 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, isAuthenticated }) =>
     <TableContainer component={Paper}>
       <Table
         aria-label="collapsible table"
-        sx={{ width: 'calc(100% - 48px)' }}>
+        sx={{ width: { xs: 'calc(100% - 48px)', md: '100%' } }}>
         <TableHead>
           <TableRow>
             <TableCell />

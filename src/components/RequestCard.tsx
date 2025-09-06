@@ -47,36 +47,36 @@ const RequestCard: React.FC<RequestCardProps> = ({
           onLoad={onImageLoad}
           style={{ display: loadingImage ? 'none' : 'block' }}
         />
-        <CardContent>
+        <CardContent sx={{ p: { xs: 1, md: 2 } }}>
           <Typography gutterBottom variant="h5" component="div">
             {request.part_name ? request.part_name.toUpperCase() : ''}
           </Typography>
           <Divider />
           <List>
-            <ListItem>
+            <ListItem sx={{ pt: { xs: 0, md: 2 } }}>
               <ListItemIcon>
                 <KeyboardDoubleArrowRightTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center' }]} />
               </ListItemIcon>
-              <ListItemText primary={request.part_brand} secondary={t('requestDetails.partBrand')} />
+              <ListItemText primary={request.formatted_created_at} secondary={t('requestDetails.createdAt')} />
             </ListItem>
-            <ListItem>
+            <ListItem sx={{ pt: { xs: 0, md: 2 } }}>
               <ListItemIcon>
                 <KeyboardDoubleArrowRightTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center' }]} />
               </ListItemIcon>
-              <ListItemText primary={request.part_model} secondary={t('requestDetails.partModel')} />
+              <ListItemText primary={`${request.part_brand} / ${request.part_model}`} secondary={`${t('requestDetails.partBrand')} / ${t('requestDetails.partModel')}`} />
             </ListItem>
-            <ListItem>
+            <ListItem sx={{ pt: { xs: 0, md: 2 } }}>
               <ListItemIcon>
                 <KeyboardDoubleArrowRightTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center' }]} />
               </ListItemIcon>
               <ListItemText primary={request.part_year} secondary={t('requestDetails.partYear')} />
             </ListItem>
-            {'part_chassis' in request && (
-              <ListItem>
-                <ListItemIcon>
-                  <KeyboardDoubleArrowRightTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center' }]} />
-                </ListItemIcon>
-                <ListItemText primary={request.part_chassis} secondary={t('requestDetails.partChassis')} />
+            {request.part_chassis && (
+              <ListItem sx={{ pt: { xs: 0, md: 2 } }}>
+              <ListItemIcon>
+                <KeyboardDoubleArrowRightTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center' }]} />
+              </ListItemIcon>
+              <ListItemText primary={request.part_chassis} secondary={t('requestDetails.partChassis')} />
               </ListItem>
             )}
           </List>

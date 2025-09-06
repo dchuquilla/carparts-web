@@ -51,7 +51,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell
-          sx={{ padding: '0px 3px' }}>
+          sx={{ padding: { xs: 0, md: 2 } }}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -60,9 +60,9 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell sx={{ padding: '0px 3px' }}>{row.formatted_created_at}</TableCell>
-        <TableCell sx={{ padding: '0px 3px' }} align="right">{row.formatted_price}</TableCell>
-        <TableCell sx={{ padding: '0px 3px' }} align="right">
+        <TableCell sx={{ padding: { xs: 0, md: 2 }, whiteSpace: { xs: 'normal', md: 'nowrap' } }}>{row.formatted_created_at}</TableCell>
+        <TableCell sx={{ padding: { xs: 0, md: 2 }, whiteSpace: { xs: 'normal', md: 'nowrap' } }} align="right">{row.formatted_price}</TableCell>
+        <TableCell sx={{ padding: { xs: 0, md: 2 } }} align="right">
             {props.isAuthenticated ? (
             <>
               <Button onClick={() => handleDeleteProposal(row.id)}>
@@ -85,7 +85,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell sx={{ padding: '0px 3px' }} style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: { xs: 0, md: 2 } }} style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">

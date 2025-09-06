@@ -6,6 +6,7 @@ interface RequestType {
   part_model?: string;
   part_year?: string;
   part_chassis?: string;
+  formatted_created_at?: string;
   proposals?: Array<{
     id: number;
     created_at: string;
