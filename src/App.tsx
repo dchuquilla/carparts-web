@@ -255,7 +255,7 @@ function App() {
         <Divider />
         <List>
           <ListItem key="Inicio" disablePadding sx={{ display: 'block' }} component={Link} to="/">
-            <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
+            <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, },
                 open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
               <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
                   open ? { mr: 3, } : { mr: 'auto', }, ]} >
@@ -266,7 +266,7 @@ function App() {
           </ListItem>
           {isAuthenticated ? (
             <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
-              <ListItemButton sx={[ { minHeight: 48, px: 2.5, },
+              <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, },
                 open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
                 <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
                   open ? { mr: 3, } : { mr: 'auto', }, ]} >
@@ -277,7 +277,7 @@ function App() {
             </ListItem>
           ) : (
             <><ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
-                <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, },
                 open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
                   <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
                   open ? { mr: 3, } : { mr: 'auto', },]}>
@@ -287,7 +287,7 @@ function App() {
                 </ListItemButton>
               </ListItem>
               <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
-                <ListItemButton sx={[{ minHeight: 48, px: 2.5, },
+                <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, },
                 open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
                   <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
                   open ? { mr: 3, } : { mr: 'auto', },]}>
