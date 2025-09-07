@@ -51,7 +51,6 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
   const token = localStorage.getItem('token');
 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
