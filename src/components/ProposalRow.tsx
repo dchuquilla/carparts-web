@@ -76,23 +76,19 @@ function ProposalRow(props: inputProps) {
         <TableCell sx={{ padding: { xs: 0, md: 2 }, whiteSpace: { xs: 'normal', md: 'nowrap' } }} align="right">{row.formatted_price}</TableCell>
         <TableCell sx={{ padding: { xs: 0, md: 2 } }} align="right">
             {props.isAuthenticated ? (
-            <>
-              <Button onClick={() => handleDeleteProposal(row.id)}>
+              <Button
+                onClick={row.status === 'accepted' ? undefined : () => handleDeleteProposal(row.id)}
+                disabled={row.status === 'accepted'}
+              >
                 <DeleteForeverTwoToneIcon />
               </Button>
-            </>
             ) : (
-            <>
-              {row.status === 'accepted' ? (
-                <Button disabled>
-                  <ShoppingBasketTwoToneIcon />
-                </Button>
-              ) : (
-                <Button onClick={() => handleApproveProposal(row.id, setProposals, setSuccess, setError)}>
-                  <ShoppingCartTwoToneIcon />
-                </Button>
-              )}
-            </>
+              <Button
+                onClick={row.status === 'accepted' ? undefined : () => handleApproveProposal(row.id, setProposals, setSuccess, setError)}
+                disabled={row.status === 'accepted'}
+              >
+                {row.status === 'accepted' ? <ShoppingBasketTwoToneIcon /> : <ShoppingCartTwoToneIcon />}
+              </Button>
             )}
         </TableCell>
       </TableRow>
