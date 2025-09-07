@@ -93,10 +93,10 @@ export const RequestsFilter: React.FC<Props> = ({
     .sort((a, b) => Number(b) - Number(a)); // newest first
 
   return (
-    <Box component="form" noValidate sx={{ p: 2, borderRadius: 2, boxShadow: 1, bgcolor: "background.paper" }}>
+    <Box component="form" noValidate sx={{ p: { xs: 1, sm: 2 }, borderRadius: 2, boxShadow: 1, bgcolor: "background.paper" }}>
       <Stack spacing={2}>
         {/* Free text name contains */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <TextField
             label={t('requestFilter.partName.label')}
             value={value.part_name_cont}
@@ -106,7 +106,7 @@ export const RequestsFilter: React.FC<Props> = ({
         </Box>
 
         {/* Brand from meta (Autocomplete, freeSolo to allow unseen values) */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <Autocomplete
             freeSolo
             options={car_brands}
@@ -120,7 +120,7 @@ export const RequestsFilter: React.FC<Props> = ({
         </Box>
 
         {/* Model from meta */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <Autocomplete
             freeSolo
             options={car_models}
@@ -134,7 +134,7 @@ export const RequestsFilter: React.FC<Props> = ({
         </Box>
 
         {/* Year EQ from meta */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <Autocomplete
             options={yearOptions}
             value={value.part_year_eq}
@@ -146,7 +146,7 @@ export const RequestsFilter: React.FC<Props> = ({
         </Box>
 
         {/* Sort select */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <FormControl sx={{ p: 1 }} fullWidth size="small">
             <InputLabel id="requests-sort-label">Sort</InputLabel>
             <Select labelId="requests-sort-label" label="Sort" value={value.s} onChange={handleSort}>
@@ -163,7 +163,7 @@ export const RequestsFilter: React.FC<Props> = ({
         </Box>
 
         {/* Actions */}
-        <Box sx={{ minWidth: 200 }}>
+        <Box sx={{ minWidth: 200, m: { xs: 0, sm: 1 } }}>
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="flex-end" sx={{ height: "100%" }}>
             <Tooltip title="Reset all filters">
               <IconButton onClick={reset} color="inherit">
@@ -171,7 +171,7 @@ export const RequestsFilter: React.FC<Props> = ({
               </IconButton>
             </Tooltip>
             {showApplyButton && (
-              <Button variant="contained" onClick={onApply}>Apply</Button>
+              <Button variant="contained" onClick={onApply}>{t('requestFilter.apply')}</Button>
             )}
           </Stack>
         </Box>

@@ -86,7 +86,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
   };
 
   // Filtering
-  const handleApply = () => { setPage(1); fetchData(1); };
+  const handleApply = () => { setPage(1); fetchData(1); setOpenModal(false); };
   const handleReset = () => { setPage(1); setFilters({ ...DEFAULT_FILTERS }); };
   // const handlePage = (_: React.ChangeEvent<unknown>, value: number) => { setPage(value); fetchData(value); };
 

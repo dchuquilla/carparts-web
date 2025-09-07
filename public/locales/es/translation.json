@@ -23,6 +23,7 @@
   },
   "requestFilter": {
     "title": "Filtrar solicitudes",
+    "apply": "Aplicar",
     "partName": {
       "label": "Nombre del repuesto",
       "placeholder": "ej. sensor"

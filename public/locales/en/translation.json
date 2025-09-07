@@ -23,6 +23,7 @@
   },
   "requestFilter": {
     "title": "Filter Requests",
+    "apply": "Apply",
     "partName": {
       "label": "Part Name",
       "placeholder": "e.g. sensor"
