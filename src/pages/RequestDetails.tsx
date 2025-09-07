@@ -283,7 +283,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
                   </Typography>
-                  <ProposalList proposals={proposals} isAuthenticated={isAuthenticated} />
+                  <ProposalList proposals={proposals} isAuthenticated={isAuthenticated} setProposals={setProposals} />
                 </CardContent>
 
                 {isAuthenticated && (

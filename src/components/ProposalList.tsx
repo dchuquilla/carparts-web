@@ -13,10 +13,11 @@ import ProposalRow from './ProposalRow';
 
 interface ProposalProps {
   proposals: Array<ReturnType<typeof CreateProposalData>>;
+  setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>;
   isAuthenticated: boolean;
 }
 
-const ProposalList:React.FC<ProposalProps> = ({ proposals, isAuthenticated }) => {
+const ProposalList:React.FC<ProposalProps> = ({ proposals, setProposals, isAuthenticated }) => {
   const { t } = useTranslation();
 
   if (!proposals) {
@@ -38,7 +39,7 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, isAuthenticated }) =>
         </TableHead>
         <TableBody>
           {proposals.map((proposal) => (
-            <ProposalRow key={proposal.created_at} row={proposal} isAuthenticated={isAuthenticated} />
+            <ProposalRow key={proposal.created_at} row={proposal} setProposals={setProposals} isAuthenticated={isAuthenticated} />
           ))}
         </TableBody>
       </Table>

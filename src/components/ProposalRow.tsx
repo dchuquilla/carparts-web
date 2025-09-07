@@ -18,12 +18,14 @@ import TableBody from '@mui/material/TableBody';
 import Button from '@mui/material/Button';
 import axiosInstance from '../api/axiosInstance';
 
-function handleApproveProposal(proposalId: number) {
+function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>) {
   // Implement the logic to approve the proposal
   console.log("approving:", proposalId);
   axiosInstance.patch(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}/accept`)
     .then(response => {
       console.log("Proposal approved:", response.data);
+      // update the UI or state here to reflect the approved proposal
+      setProposals(prevProposals => prevProposals.filter(proposal => proposal.id === proposalId).map(proposal => ({ ...proposal, status: 'accepted' })));
     })
     .catch(error => {
       console.error("Error approving proposal:", error);
@@ -42,9 +44,9 @@ function handleDeleteProposal(proposalId: number) {
     });
 }
 
-function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuthenticated: boolean }) {
+function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>, isAuthenticated: boolean }) {
   const { t } = useTranslation();
-  const { row } = props;
+  const { row, setProposals } = props;
   const [open, setOpen] = useState(false);
 
   return (
@@ -76,7 +78,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, isAuth
                   <ShoppingBasketTwoToneIcon />
                 </Button>
               ) : (
-                <Button onClick={() => handleApproveProposal(row.id)}>
+                <Button onClick={() => handleApproveProposal(row.id, setProposals)}>
                   <ShoppingCartTwoToneIcon />
                 </Button>
               )}
