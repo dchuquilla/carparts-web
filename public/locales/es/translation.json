@@ -21,6 +21,25 @@
     "viewDetails": "Ver detalles",
     "noRequests": "No hay solicitudes disponibles"
   },
+  "requestFilter": {
+    "title": "Filtrar solicitudes",
+    "partName": {
+      "label": "Nombre del repuesto",
+      "placeholder": "ej. sensor"
+    },
+    "partBrand": {
+      "label": "Marca",
+      "placeholder": "ej. Toyota"
+    },
+    "partModel": {
+      "label": "Modelo",
+      "placeholder": "ej. Corolla"
+    },
+    "partYear": {
+      "label": "Año",
+      "placeholder": "Seleccionar…"
+    }
+  },
   "requestDetails": {
     "title": "Solicitud",
     "notDetailsFound": "No se encontraron detalles de la solicitud.",

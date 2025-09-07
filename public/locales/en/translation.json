@@ -21,6 +21,25 @@
     "viewDetails": "View Details",
     "noRequests": "No requests available"
   },
+  "requestFilter": {
+    "title": "Filter Requests",
+    "partName": {
+      "label": "Part Name",
+      "placeholder": "e.g. sensor"
+    },
+    "partBrand": {
+      "label": "Brand",
+      "placeholder": "e.g. Toyota"
+    },
+    "partModel": {
+      "label": "Model",
+      "placeholder": "e.g. Corolla"
+    },
+    "partYear": {
+      "label": "Year",
+      "placeholder": "Select…"
+    }
+  },
   "requestDetails": {
     "title": "Request",
     "notDetailsFound": "No request details found.",

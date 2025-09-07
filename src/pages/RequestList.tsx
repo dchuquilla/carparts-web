@@ -5,10 +5,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
-import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Container, Modal, TextField } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Container, Modal } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import RequestsFilter, { DEFAULT_FILTERS, RequestsFilterState, buildRansackSearchParams, RequestsMeta } from '../components/RequestsFilter';
 
 interface SignInProps {
   isAuthenticated: boolean;
@@ -18,13 +19,20 @@ interface SignInProps {
 const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticated }) => {
   const { t } = useTranslation();
   const [requests, setRequests] = useState([]);
-  // const [requestsMeta, setRequestsMeta] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+
+  // FILTERING
+  const [filters, setFilters] = React.useState<RequestsFilterState>({ ...DEFAULT_FILTERS });
+  const [page, setPage] = React.useState<number>(1);
+  const [perPage] = React.useState<number>(20);
+  const [meta, setMeta] = React.useState<RequestsMeta>({
+    page: 1, per_page: 20, pages: 1, count: 0, car_brands: [], car_models: [], car_years: []
+  });
 
   const modalStyle = {
     position: 'absolute',
@@ -37,22 +45,30 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
     boxShadow: 24,
     p: { xs: 1, sm: 2 },
   };
-  useEffect(() => {
+
+  const fetchData = React.useCallback((pageArg?: number) => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
 
-    axiosInstance.get('https://dev-api.quientiene.com/api/v1/requests')
+    // Filtering
+    const params = buildRansackSearchParams(filters);
+      params.set("page", String(pageArg ?? page));
+      params.set("per_page", String(perPage));
+
+    axiosInstance.get(`https://dev-api.quientiene.com/api/v1/requests?${params.toString()}`)
       .then(response => {
         setRequests(response.data.requests);
         console.log("requestsMeta:", response.data.meta);
-        // setRequestsMeta(response.data.meta);
+        setMeta(response.data.meta);
         setLoading(false);
       })
       .catch(error => {
         console.error('There was an error fetching the requests!', error);
         setLoading(false);
       });
-  }, [setIsAuthenticated]);
+  }, [filters, page, perPage, setIsAuthenticated]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
 
   const handleImageLoad = () => {
     setLoadingImage(false);
@@ -68,6 +84,11 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
       void navigate(to);
     }, 200); // 200ms delay
   };
+
+  // Filtering
+  const handleApply = () => { setPage(1); fetchData(1); };
+  const handleReset = () => { setPage(1); setFilters({ ...DEFAULT_FILTERS }); };
+  // const handlePage = (_: React.ChangeEvent<unknown>, value: number) => { setPage(value); fetchData(value); };
 
   return (
     <Container
@@ -120,7 +141,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
         aria-describedby="modal-modal-notes"
       >
         <Card sx={modalStyle}>
-          <CardHeader title={t('requests.filter.title')} />
+          <CardHeader title={t('requestFilter.title')} />
           <CardContent sx={{ p: 0 }}>
             <Box
               component="form"
@@ -128,11 +149,13 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
               noValidate
               autoComplete="off"
             >
-              <TextField
-                id="filter-proposals"
-                label={t('requests.filter.proposals')}
-                variant="outlined"
-                size="small"
+              <RequestsFilter
+                value={filters}
+                onChange={setFilters}
+                onApply={handleApply}
+                onReset={handleReset}
+                requestMeta={meta} // <-- pass meta from server
+                showApplyButton
               />
             </Box>
           </CardContent>
