@@ -27,7 +27,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
 
     axiosInstance.get('https://dev-api.quientiene.com/api/v1/requests')
       .then(response => {
-        setRequests(response.data);
+        setRequests(response.data.requests);
         setLoading(false);
       })
       .catch(error => {
