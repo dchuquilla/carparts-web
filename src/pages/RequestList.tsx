@@ -5,9 +5,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
+import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 
 interface SignInProps {
   isAuthenticated: boolean;
@@ -17,6 +18,7 @@ interface SignInProps {
 const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticated }) => {
   const { t } = useTranslation();
   const [requests, setRequests] = useState([]);
+  // const [requestsMeta, setRequestsMeta] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
@@ -28,6 +30,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
     axiosInstance.get('https://dev-api.quientiene.com/api/v1/requests')
       .then(response => {
         setRequests(response.data.requests);
+        // setRequestsMeta(response.data.meta);
         setLoading(false);
       })
       .catch(error => {
@@ -36,13 +39,13 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
       });
   }, [setIsAuthenticated]);
 
-    const handleImageLoad = () => {
-      setLoadingImage(false);
-    };
+  const handleImageLoad = () => {
+    setLoadingImage(false);
+  };
 
-    if (loading) {
-      return <CircularProgress />;
-    }
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   const handleCardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, to: string) => {
     event.preventDefault();
@@ -54,8 +57,22 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
   return (
     <div>
       <h1>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {t('requestsList.title')}
+          <Button
+          variant="outlined"
+          color="primary"
+          sx={{
+            borderRadius: '50%',
+            minWidth: '40px',
+            width: '40px',
+            height: '40px',
+            padding: '0',
+            margin: '0 5px 0 0',
+          }}
+          >
+            <TuneRoundedIcon />
+          </Button>
         </Box>
       </h1>
       <Box sx={{
