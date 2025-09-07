@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { CircularProgress } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 import CreateProposalData from '../types/CreateProposalData';
 import ProposalRow from './ProposalRow';
 
@@ -19,31 +19,37 @@ interface ProposalProps {
 
 const ProposalList:React.FC<ProposalProps> = ({ proposals, setProposals, isAuthenticated }) => {
   const { t } = useTranslation();
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   if (!proposals) {
     return <CircularProgress />;
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table
-        aria-label="collapsible table"
-        sx={{ width: { xs: 'calc(100% - 48px)', md: '100%' } }}>
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>{t('proposalsList.createdAt')}</TableCell>
-            <TableCell align="right">{t('proposalsList.price')}</TableCell>
-            <TableCell> </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {proposals.map((proposal) => (
-            <ProposalRow key={proposal.created_at} row={proposal} setProposals={setProposals} isAuthenticated={isAuthenticated} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {error && <Alert severity="error">{t('proposalDetails.acceptedError')}</Alert>}
+      {success && <Alert severity="success">{t('proposalDetails.acceptedSuccess')}</Alert>}
+      <TableContainer component={Paper}>
+        <Table
+          aria-label="collapsible table"
+          sx={{ width: { xs: 'calc(100% - 48px)', md: '100%' } }}>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>{t('proposalsList.createdAt')}</TableCell>
+              <TableCell align="right">{t('proposalsList.price')}</TableCell>
+              <TableCell> </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {proposals.map((proposal) => (
+              <ProposalRow key={proposal.created_at} row={proposal} setProposals={setProposals} setSuccess={setSuccess} setError={setError} isAuthenticated={isAuthenticated} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 

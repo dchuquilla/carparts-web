@@ -20,7 +20,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,11 +30,11 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError(false);
     setSuccess(false);
 
     if (formData.password !== formData.confirmPassword) {
-      setError(t('storeForm.errors.passwordMismatch'));
+      setError(true);
       setLoading(false);
       return;
     }
@@ -57,7 +57,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
         storeUid: '',
       });
     } catch (err) {
-      setError(t('storeForm.storeCreationFailed'));
+      setError(true);
       console.error(err);
     } finally {
       setLoading(false);
@@ -69,7 +69,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       <Typography variant="h4" gutterBottom>
         {t('storeForm.createStore')}
       </Typography>
-      {error && <Alert severity="error">{error}</Alert>}
+      {error && <Alert severity="error">{t('storeForm.storeCreationFailed')}</Alert>}
       {success && <Alert severity="success">{t('storeForm.storeCreated')}</Alert>}
         <form onSubmit={(e) => { void handleSubmit(e); }}>
           <TextField

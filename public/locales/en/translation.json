@@ -32,6 +32,10 @@
     "partImage": "Part Image",
     "createdAt": "Date"
   },
+  "proposalDetails": {
+    "acceptedSuccess": "Proposal accepted successfully",
+    "acceptedError": "Failed to accept proposal"
+  },
   "proposalsList": {
     "title": "Proposals List",
     "search": "Search",

@@ -32,6 +32,10 @@
     "partImage": "Imagen del repuesto",
     "createdAt": "Fecha"
   },
+  "proposalDetails": {
+    "acceptedSuccess": "Propuesta aceptada con éxito",
+    "acceptedError": "Error al aceptar la propuesta"
+  },
   "proposalsList": {
     "title": "Lista de propuestas",
     "search": "Buscar",

@@ -18,7 +18,7 @@ import TableBody from '@mui/material/TableBody';
 import Button from '@mui/material/Button';
 import axiosInstance from '../api/axiosInstance';
 
-function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>) {
+function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>, setSuccess: React.Dispatch<React.SetStateAction<boolean>>, setError: React.Dispatch<React.SetStateAction<boolean>>) {
   // Implement the logic to approve the proposal
   console.log("approving:", proposalId);
   axiosInstance.patch(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}/accept`)
@@ -26,9 +26,11 @@ function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<
       console.log("Proposal approved:", response.data);
       // update the UI or state here to reflect the approved proposal
       setProposals(prevProposals => prevProposals.filter(proposal => proposal.id === proposalId).map(proposal => ({ ...proposal, status: 'accepted' })));
+      setSuccess(true);
     })
     .catch(error => {
       console.error("Error approving proposal:", error);
+      setError(true);
     });
 }
 
@@ -44,9 +46,17 @@ function handleDeleteProposal(proposalId: number) {
     });
 }
 
-function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>, isAuthenticated: boolean }) {
+type inputProps = { 
+  row: ReturnType<typeof CreateProposalData>, 
+  setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>, 
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>, 
+  setError: React.Dispatch<React.SetStateAction<boolean>>, 
+  isAuthenticated: boolean 
+}
+
+function ProposalRow(props: inputProps) {
   const { t } = useTranslation();
-  const { row, setProposals } = props;
+  const { row, setProposals, setSuccess, setError } = props;
   const [open, setOpen] = useState(false);
 
   return (
@@ -78,7 +88,7 @@ function ProposalRow(props: { row: ReturnType<typeof CreateProposalData>, setPro
                   <ShoppingBasketTwoToneIcon />
                 </Button>
               ) : (
-                <Button onClick={() => handleApproveProposal(row.id, setProposals)}>
+                <Button onClick={() => handleApproveProposal(row.id, setProposals, setSuccess, setError)}>
                   <ShoppingCartTwoToneIcon />
                 </Button>
               )}
