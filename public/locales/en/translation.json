@@ -118,6 +118,11 @@
       "invalidEcuadorPhone": "Invalid Ecuador phone number format. It should start with +5939"
     }
   },
+  "storeConfirmation": {
+    "title": "Store Confirmation",
+    "confirmationToken": "Confirmation Token",
+    "goToHome": "Go to Home"
+  },
   "sessionForm": {
     "title": "Login",
     "email": "Email",

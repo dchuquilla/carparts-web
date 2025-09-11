@@ -118,6 +118,11 @@
       "invalidEcuadorPhone": "Debe ser un número ecuatoriano válido (comenzando con +5939)"
     }
   },
+  "storeConfirmation": {
+    "title": "Confirmación de cuenta de la tienda",
+    "confirmationToken": "Para completar el registro de su cuenta debe realizar el pago de $10 de la suscripción mensual.",
+    "goToHome": "Ir a inicio"
+  },
   "sessionForm": {
     "title": "Iniciar sesión",
     "email": "Correo electrónico",

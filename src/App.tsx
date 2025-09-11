@@ -34,6 +34,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { t } from 'i18next';
 import Profile from './pages/Profile';
+import StoreConfirmation from './pages/StoreConfirmation';
 import axiosInstance from './api/axiosInstance';
 
 const drawerWidth = 240;
@@ -140,6 +141,10 @@ function App() {
 
     const publicPaths = ['/signin', '/users/new'];
     const requestPathRegex = /^\/requests\/[a-zA-Z0-9]+$/;
+    console.log("Current Path:", window.location.pathname, window.location.pathname.startsWith('/stores/confirm'));
+    if (window.location.pathname.startsWith('/stores/confirm')) {
+      return;
+    }
 
     if (!token && (!publicPaths.includes(window.location.pathname) && !requestPathRegex.test(window.location.pathname))) {
       void navigate('/signin');
@@ -311,6 +316,7 @@ function App() {
           <Route path="/users/new" element={<UserForm user={undefined} />} />
           <Route path="/signin" element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/profile" element={<Profile isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/stores/confirm/:confirmation_token" element={<StoreConfirmation />} />
         </Routes>
       </Box>
     </Box>
