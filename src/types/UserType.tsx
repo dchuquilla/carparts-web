@@ -5,6 +5,7 @@ interface UserType {
   phone: string,
   storeName: string,
   storeUid: string,
+  termsAndConditions: boolean
 }
 
 export default UserType;

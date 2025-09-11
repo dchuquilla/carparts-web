@@ -104,7 +104,8 @@
     "createStore": "Create Store",
     "storeCreated": "Store created successfully",
     "storeCreationFailed": "Failed to create store",
-    "dubmit": "Submit",
+    "submit": "Submit",
+    "termsAndConditions": "I have read and accept the <a href='https://quientiene.com/terminos.html' target='_blank'>terms and conditions</a>.",
     "errors": {
       "password": "Password is required",
       "passwordConfirm": "Password confirmation is required",

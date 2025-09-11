@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, CircularProgress, Alert } from '@mui/material';
+import { Box, Button, TextField, Typography, CircularProgress, Alert, Switch, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
 import UserType from '../types/UserType';
@@ -17,6 +17,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
     phone: user?.phone ?? '',
     storeName: user?.storeName ?? '',
     storeUid: user?.storeUid ?? '',
+    termsAndConditions: user?.termsAndConditions ?? false
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -46,6 +47,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
         phone: formData.phone.replace(/\+/g, ''),
         store_name: formData.storeName,
         store_uid: formData.storeUid,
+        terms_and_conditions: formData.termsAndConditions
       }});
       setSuccess(true);
       setFormData({
@@ -55,6 +57,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
         phone: '',
         storeName: '',
         storeUid: '',
+        termsAndConditions: false
       });
     } catch (err) {
       setError(true);
@@ -71,87 +74,94 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       </Typography>
       {error && <Alert severity="error">{t('storeForm.storeCreationFailed')}</Alert>}
       {success && <Alert severity="success">{t('storeForm.storeCreated')}</Alert>}
-        <form onSubmit={(e) => { void handleSubmit(e); }}>
+      <form onSubmit={(e) => { void handleSubmit(e); }}>
+        <TextField
+        fullWidth
+        margin="normal"
+        label={t('storeForm.email')}
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+        />
+        {user == null && (
+          <><TextField
+          fullWidth
+          margin="normal"
+          label={t('storeForm.password')}
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          required />
           <TextField
-            fullWidth
-            margin="normal"
-            label={t('storeForm.email')}
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          {user == null && (
-            <><TextField
-            fullWidth
-            margin="normal"
-            label={t('storeForm.password')}
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required /><TextField
-              fullWidth
-              margin="normal"
-              label={t('storeForm.passwordConfirm')}
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required /></>
-          )}
-            <TextField
-            fullWidth
-            margin="normal"
-            label={t('storeForm.phone')}
-            name="phone"
-            type="tel"
-            value={formData.phone && formData.phone.length > 0 ? formData.phone : '+593'}
-            onChange={(e) => {
-              // Only allow numbers and + at the start
-              let value = e.target.value.replace(/[^+\d]/g, '');
-              if (!value.startsWith('+')) value = '+' + value.replace(/^\+*/, '');
-              if (value.length > 13) value = value.slice(0, 13);
-              setFormData({ ...formData, phone: value });
-            }}
-            required
-            inputProps={{ maxLength: 13 }}
-            error={
-              formData.phone.length === 13 &&
-              !/^\+5939\d{8}$/.test(formData.phone)
-            }
-            helperText={
-              formData.phone.length === 13 && !/^\+5939\d{8}$/.test(formData.phone)
-                ? t('storeForm.errors.invalidEcuadorPhone')
-                : 'Ej: +5939XXXXXXXX'
-            }
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label={t('storeForm.storeName')}
-            name="storeName"
-            value={formData.storeName}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label={t('storeForm.storeUid')}
-            name="storeUid"
-            value={formData.storeUid}
-            onChange={handleChange}
-            required
-          />
+          fullWidth
+          margin="normal"
+          label={t('storeForm.passwordConfirm')}
+          name="confirmPassword"
+          type="password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required /></>
+        )}
+        <TextField
+        fullWidth
+        margin="normal"
+        label={t('storeForm.phone')}
+        name="phone"
+        type="tel"
+        value={formData.phone && formData.phone.length > 0 ? formData.phone : '+593'}
+        onChange={(e) => {
+          // Only allow numbers and + at the start
+          let value = e.target.value.replace(/[^+\d]/g, '');
+          if (!value.startsWith('+')) value = '+' + value.replace(/^\+*/, '');
+          if (value.length > 13) value = value.slice(0, 13);
+          setFormData({ ...formData, phone: value });
+        }}
+        required
+        inputProps={{ maxLength: 13 }}
+        error={
+          formData.phone.length === 13 &&
+          !/^\+5939\d{8}$/.test(formData.phone)
+        }
+        helperText={
+          formData.phone.length === 13 && !/^\+5939\d{8}$/.test(formData.phone)
+            ? <span dangerouslySetInnerHTML={{ __html: t('storeForm.errors.invalidEcuadorPhone') }} />
+            : 'Ej: +5939XXXXXXXX'
+        }
+        />
+        <TextField
+        fullWidth
+        margin="normal"
+        label={t('storeForm.storeName')}
+        name="storeName"
+        value={formData.storeName}
+        onChange={handleChange}
+        required
+        />
+        <TextField
+        fullWidth
+        margin="normal"
+        label={t('storeForm.storeUid')}
+        name="storeUid"
+        value={formData.storeUid}
+        onChange={handleChange}
+        required
+        />
+        <FormControlLabel
+          control={
+            <Switch checked={formData.termsAndConditions} onChange={(e) => setFormData({ ...formData, termsAndConditions: e.target.checked })} name="termsAndConditions" />
+          }
+          label={<span dangerouslySetInnerHTML={{ __html: t('storeForm.termsAndConditions') }} />}
+        />
         <Box sx={{ mt: 2 }}>
           <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            disabled={loading}
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={loading}
           >
             {loading ? <CircularProgress size={24} /> : t('storeForm.submit')}
           </Button>
