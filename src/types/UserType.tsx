@@ -8,4 +8,8 @@ interface UserType {
   termsAndConditions: boolean
 }
 
-export default UserType;
+interface UserError {
+  error: string[]
+}
+
+export type { UserType, UserError };

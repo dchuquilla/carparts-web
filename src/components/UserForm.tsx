@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, CircularProgress, Alert, Switch, FormControlLabel } from '@mui/material';
+import { Box, Button, TextField, Typography, CircularProgress, Alert, Switch, FormControlLabel, List, ListItem, ListItemText } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
-import UserType from '../types/UserType';
+import { UserType } from '../types/UserType';
+import { MuiTelInput } from 'mui-tel-input';
+import axios, { AxiosError } from 'axios';
 
 interface UserFormProps {
   user?: UserType;
@@ -22,6 +26,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorList, setErrorList] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -61,7 +66,16 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       });
     } catch (err) {
       setError(true);
-      console.error(err);
+      if ((err as AxiosError).response?.data) {
+        if (axios.isAxiosError(err)) {
+          console.error('Error creating user 1:', err.response?.data.error);
+          setErrorList(err.response?.data.error || []);
+        } else {
+          console.error('Error creating user 2:', err);
+        }
+      } else {
+        console.error('Error creating user:', err);
+      }
     } finally {
       setLoading(false);
     }
@@ -72,7 +86,18 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       <Typography variant="h4" gutterBottom>
         {t('storeForm.createStore')}
       </Typography>
-      {error && <Alert severity="error">{t('storeForm.storeCreationFailed')}</Alert>}
+      {error && <Alert severity="error">{
+        <>
+          {t('storeForm.storeCreationFailed')}
+          <List>
+            {errorList.map((error, index) => (
+              <ListItem key={index}>
+                <ListItemText primary={error} />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      }</Alert>}
       {success && <Alert severity="success">{t('storeForm.storeCreated')}</Alert>}
       <form onSubmit={(e) => { void handleSubmit(e); }}>
         <TextField
@@ -105,31 +130,12 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
           onChange={handleChange}
           required /></>
         )}
-        <TextField
+        <MuiTelInput 
+        value={formData.phone} 
+        onChange={(value) => setFormData({ ...formData, phone: value })}
+        defaultCountry="EC"
+        disableFormatting
         fullWidth
-        margin="normal"
-        label={t('storeForm.phone')}
-        name="phone"
-        type="tel"
-        value={formData.phone && formData.phone.length > 0 ? formData.phone : '+593'}
-        onChange={(e) => {
-          // Only allow numbers and + at the start
-          let value = e.target.value.replace(/[^+\d]/g, '');
-          if (!value.startsWith('+')) value = '+' + value.replace(/^\+*/, '');
-          if (value.length > 13) value = value.slice(0, 13);
-          setFormData({ ...formData, phone: value });
-        }}
-        required
-        inputProps={{ maxLength: 13 }}
-        error={
-          formData.phone.length === 13 &&
-          !/^\+5939\d{8}$/.test(formData.phone)
-        }
-        helperText={
-          formData.phone.length === 13 && !/^\+5939\d{8}$/.test(formData.phone)
-            ? <span dangerouslySetInnerHTML={{ __html: t('storeForm.errors.invalidEcuadorPhone') }} />
-            : 'Ej: +5939XXXXXXXX'
-        }
         />
         <TextField
         fullWidth
@@ -154,6 +160,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
             <Switch checked={formData.termsAndConditions} onChange={(e) => setFormData({ ...formData, termsAndConditions: e.target.checked })} name="termsAndConditions" />
           }
           label={<span dangerouslySetInnerHTML={{ __html: t('storeForm.termsAndConditions') }} />}
+          required
         />
         <Box sx={{ mt: 2 }}>
           <Button

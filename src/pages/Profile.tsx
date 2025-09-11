@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserForm from '../components/UserForm';
-import UserType from '../types/UserType';
+import { UserType } from '../types/UserType';
 import axiosInstance from '../api/axiosInstance';
 
 interface SignInProps {
