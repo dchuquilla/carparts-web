@@ -55,7 +55,7 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
       params.set("page", String(pageArg ?? page));
       params.set("per_page", String(perPage));
 
-    axiosInstance.get(`https://dev-api.quientiene.com/api/v1/requests?${params.toString()}`)
+    axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/requests?${params.toString()}`)
       .then(response => {
         setRequests(response.data.requests);
         console.log("requestsMeta:", response.data.meta);

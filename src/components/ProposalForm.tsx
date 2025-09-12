@@ -43,7 +43,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
 
     try {
       const proposalResponse = await axiosInstance.post(
-        'https://dev-api.quientiene.com/api/v1/proposals', {
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/proposals`, {
           proposal: {
             request_id: proposal?.requestId,
             price: formData.price,

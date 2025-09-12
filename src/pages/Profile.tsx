@@ -20,7 +20,7 @@ const Profile: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
     const fetchUser = async () => {
       try {
 
-        const res = await axiosInstance.get('https://dev-api.quientiene.com/api/v1/profile', {
+        const res = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/profile`, {
           headers: {
             Authorization: `${token}`,
           },

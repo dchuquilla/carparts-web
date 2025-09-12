@@ -9,5 +9,9 @@ export default defineConfig({
     port: 5173,
     cors: true,
     allowedHosts: ['.quientiene.com']
+  },
+  define: {
+    'process.env': {},
+    'import.meta.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL || 'https://dev-api.quientiene.com')
   }
 })

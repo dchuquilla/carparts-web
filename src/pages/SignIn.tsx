@@ -22,7 +22,7 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('https://dev-api.quientiene.com/users/sign_in', {
+      const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/users/sign_in`, {
         user: { email, password },
       }, {
         headers: { 'Content-Type': 'application/json' },

@@ -15,7 +15,7 @@ import { List } from '@mui/material';
 const StoreConfirmation: React.FC = () => {
   const { confirmation_token } = useParams<{ confirmation_token: string }>();
   useEffect(() => {
-    axiosInstance.get(`https://dev-api.quientiene.com/users/confirmation?confirmation_token=${confirmation_token}`)
+    axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/users/confirmation?confirmation_token=${confirmation_token}`)
       .then(response => {
         // Manejar la respuesta de la verificación del token
         console.log('Store confirmed:', response.data);

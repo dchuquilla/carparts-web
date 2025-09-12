@@ -170,7 +170,7 @@ function App() {
 
   const handleLogOut = async () => {
     try {
-      await axiosInstance.delete('https://dev-api.quientiene.com/users/sign_out', {
+      await axiosInstance.delete(`${import.meta.env.VITE_API_BASE_URL}/users/sign_out`, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',

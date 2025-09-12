@@ -73,8 +73,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
 
   useEffect(() => {
     const requestUrl = token
-      ? `https://dev-api.quientiene.com/api/v1/requests/${show_key}`
-      : `https://dev-api.quientiene.com/api/v1/requests/details/${show_key}`
+      ? `${import.meta.env.VITE_API_BASE_URL}/api/v1/requests/${show_key}`
+      : `${import.meta.env.VITE_API_BASE_URL}/api/v1/requests/details/${show_key}`
     axiosInstance.get(requestUrl)
       .then(response => {
         setRequestData(response.data);
@@ -103,7 +103,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
       const prevRows: Array<ReturnType<typeof CreateProposalData>> = [];
       const fetchData = async () => {
         try {
-          const res = await axiosInstance.get(`https://dev-api.quientiene.com/api/v1/proposals?request_id=${show_key}`, {
+          const res = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/proposals?request_id=${show_key}`, {
             headers: {
               Authorization: `${token}`,
             },

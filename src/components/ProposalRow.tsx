@@ -21,7 +21,7 @@ import axiosInstance from '../api/axiosInstance';
 function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<React.SetStateAction<Array<ReturnType<typeof CreateProposalData>>>>, setSuccess: React.Dispatch<React.SetStateAction<boolean>>, setError: React.Dispatch<React.SetStateAction<boolean>>) {
   // Implement the logic to approve the proposal
   console.log("approving:", proposalId);
-  axiosInstance.patch(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}/accept`)
+  axiosInstance.patch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/proposals/${proposalId}/accept`)
     .then(response => {
       console.log("Proposal approved:", response.data);
       // update the UI or state here to reflect the approved proposal
@@ -37,7 +37,7 @@ function handleApproveProposal(proposalId: number, setProposals: React.Dispatch<
 function handleDeleteProposal(proposalId: number) {
   // Implement the logic to reject the proposal
   console.log("deleting:", proposalId);
-  axiosInstance.delete(`https://dev-api.quientiene.com/api/v1/proposals/${proposalId}`)
+  axiosInstance.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/proposals/${proposalId}`)
     .then(response => {
       console.log("Proposal rejected:", response.data);
     })

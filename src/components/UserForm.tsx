@@ -46,7 +46,7 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
     }
 
     try {
-      await axiosInstance.post('https://dev-api.quientiene.com/users', {user: {
+      await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/users`, {user: {
         email: formData.email,
         password: formData.password,
         phone: formData.phone.replace(/\+/g, ''),
