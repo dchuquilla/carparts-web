@@ -119,8 +119,8 @@
     }
   },
   "storeConfirmation": {
-    "title": "Confirmación de cuenta de la tienda",
-    "confirmationToken": "Para completar el registro de su cuenta debe realizar el pago de $10 de la suscripción mensual.",
+    "title": "Bienvenido a QuienTiene.com",
+    "confirmationToken": "¡Ya casi está listo! Solo realice el pago de $10 de la suscripción mensual para completar su registro.",
     "goToHome": "Ir a inicio"
   },
   "sessionForm": {
