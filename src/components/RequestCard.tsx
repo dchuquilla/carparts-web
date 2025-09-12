@@ -41,7 +41,7 @@ const RequestCard: React.FC<RequestCardProps> = ({
         {loadingImage && <CircularProgress />}
         <CardMedia
           component="img"
-          height="140"
+          height="70"
           image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
           alt={t('requestDetails.partImage')}
           onLoad={onImageLoad}

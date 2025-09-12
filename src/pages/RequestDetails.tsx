@@ -174,29 +174,30 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         boxSizing: 'border-box',
       }}
     >
+      {isAuthenticated && (
+        <h1>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+            variant="outlined"
+            color="primary"
+            component={Link}
+            to="/requests"
+            sx={{
+              borderRadius: '50%',
+              minWidth: '40px',
+              width: '40px',
+              height: '40px',
+              padding: '0',
+              margin: '0 5px 0 0',
+            }}
+            >
+              <ArrowBackIosRoundedIcon />
+            </Button>
 
-      <h1>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-          variant="outlined"
-          color="primary"
-          component={Link}
-          to="/requests"
-          sx={{
-            borderRadius: '50%',
-            minWidth: '40px',
-            width: '40px',
-            height: '40px',
-            padding: '0',
-            margin: '0 5px 0 0',
-          }}
-          >
-            <ArrowBackIosRoundedIcon />
-          </Button>
-
-          {t('requestDetails.title')}
-        </Box>
-      </h1>
+            {t('requestDetails.title')}
+          </Box>
+        </h1>
+      )}
       <Box
         sx={{
           height: 'calc(100vh - 120px)', // 120px AppBar height
