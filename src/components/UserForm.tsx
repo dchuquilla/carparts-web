@@ -86,19 +86,6 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
       <Typography variant="h4" gutterBottom>
         {t('storeForm.createStore')}
       </Typography>
-      {error && <Alert severity="error">{
-        <>
-          {t('storeForm.storeCreationFailed')}
-          <List>
-            {errorList.map((error, index) => (
-              <ListItem key={index}>
-                <ListItemText primary={error} />
-              </ListItem>
-            ))}
-          </List>
-        </>
-      }</Alert>}
-      {success && <Alert severity="success">{t('storeForm.storeCreated')}</Alert>}
       <form onSubmit={(e) => { void handleSubmit(e); }}>
         <TextField
         fullWidth
@@ -162,6 +149,21 @@ const UserForm: React.FC<UserFormProps> = ({ user }) =>  {
           label={<span dangerouslySetInnerHTML={{ __html: t('storeForm.termsAndConditions') }} />}
           required
         />
+
+        {error && <Alert severity="error">{
+          <>
+            {t('storeForm.storeCreationFailed')}
+            <List>
+              {errorList.map((error, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={error} />
+                </ListItem>
+              ))}
+            </List>
+          </>
+        }</Alert>}
+        {success && <Alert severity="success">{t('storeForm.storeCreated')}</Alert>}
+
         <Box sx={{ mt: 2 }}>
           <Button
           type="submit"
