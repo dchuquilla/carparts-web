@@ -31,7 +31,7 @@ const StoreConfirmation: React.FC = () => {
       <Card
         size="lg"
         variant="plain"
-        orientation="horizontal"
+        orientation="vertical"
         sx={{
           textAlign: 'center',
           maxWidth: '100%',
@@ -41,26 +41,6 @@ const StoreConfirmation: React.FC = () => {
           overflow: 'auto',
         }}
       >
-        <CardOverflow
-          variant="solid"
-          sx={{
-            flex: { xs: '0 0 100%', sm: '0 0 400px', md: '0 0 620px' },
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            px: 'var(--Card-padding)',
-            backgroundColor: '#3d1766',
-          }}
-        >
-          <AspectRatio ratio="23/19" objectFit="contain" variant="plain">
-            <img
-              srcSet={`/qrPichincha.png?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              src={`/qrPichincha.png?w=164&h=164&fit=crop&auto=format`}
-              alt={"QR deUna de QuienTiene.com"}
-              loading="lazy"
-            />
-          </AspectRatio>
-        </CardOverflow>
         <CardContent sx={{ gap: 1.5, minWidth: 200 }}>
           <AspectRatio ratio="19/8" objectFit="contain" variant="plain">
             <img
@@ -123,6 +103,26 @@ const StoreConfirmation: React.FC = () => {
             {t("sessionForm.login")}
           </Button>
         </CardContent>
+        <CardOverflow
+          variant="solid"
+          sx={{
+            flex: { xs: '0 0 100%', sm: '0 0 400px', md: '0 0 620px' },
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            px: 'var(--Card-padding)',
+            backgroundColor: '#3d1766',
+          }}
+        >
+          <AspectRatio ratio="23/19" objectFit="contain" variant="plain">
+            <img
+              srcSet={`/qrPichincha.png?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`/qrPichincha.png?w=164&h=164&fit=crop&auto=format`}
+              alt={"QR deUna de QuienTiene.com"}
+              loading="lazy"
+            />
+          </AspectRatio>
+        </CardOverflow>
       </Card>
 
     </div>
