@@ -8,7 +8,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     cors: true,
-    allowedHosts: ['.quientiene.com']
+    allowedHosts: ['.quientiene.com', 'carparts-web.onrender.com']
   },
   define: {
     'process.env': {},
