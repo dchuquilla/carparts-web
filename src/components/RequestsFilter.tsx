@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // src/components/RequestsFilter.tsx
 import React from "react";
 import {
@@ -59,7 +60,7 @@ type Props = {
   onApply?: () => void;
   onReset?: () => void;
   showApplyButton?: boolean;
-  requestMeta: RequestsMeta; // <-- new
+  requestMeta: RequestsMeta;
 };
 
 const asYearString = (v: number | string) => String(v);
