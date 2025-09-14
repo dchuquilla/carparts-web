@@ -18,7 +18,7 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
 
   // Parse redirect_to from query string
   const params = new URLSearchParams(location.search);
-  const redirectTo = params.get('redirect_to') || '/';
+  const redirectTo = params.get('redirect_to') || '/requests';
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
