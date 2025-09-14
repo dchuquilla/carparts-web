@@ -1,8 +1,8 @@
 {
   "welcome": "Bienvenido",
   "close": "Cerrar",
-  "requests": "Solicitudes",
-  "request": "Solicitud",
+  "requests": "Pedidos",
+  "request": "Pedido",
   "store": "Tienda",
   "stores": "Tiendas",
   "proposal": "Propuesta",
@@ -12,17 +12,17 @@
     "unknownError": "Error desconocido"
   },
   "requestsList": {
-    "title": "Lista de solicitudes",
+    "title": "Lista de pedidos",
     "search": "Buscar",
     "filter": "Filtrar",
     "status": "Estado",
     "date": "Fecha",
     "actions": "Acciones",
     "viewDetails": "Ver detalles",
-    "noRequests": "No hay solicitudes disponibles"
+    "noRequests": "No hay pedidos disponibles"
   },
   "requestFilter": {
-    "title": "Filtrar solicitudes",
+    "title": "Filtrar pedidos",
     "apply": "Aplicar",
     "partName": {
       "label": "Nombre del repuesto",
@@ -42,8 +42,8 @@
     }
   },
   "requestDetails": {
-    "title": "Solicitud",
-    "notDetailsFound": "No se encontraron detalles de la solicitud.",
+    "title": "Pedido",
+    "notDetailsFound": "No se encontraron detalles del pedido.",
     "partName": "Nombre del repuesto",
     "partBrand": "Marca",
     "partModel": "Modelo",
