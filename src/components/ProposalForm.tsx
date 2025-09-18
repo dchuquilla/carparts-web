@@ -98,7 +98,8 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
             value={formData.price}
             customInput={TextField}
             onChange={handleChange}
-            thousandSeparator
+            thousandSeparator="."
+            decimalSeparator=","
             valueIsNumericString
             prefix="$"
             name="price"
