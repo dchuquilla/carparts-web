@@ -21,13 +21,19 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
   const redirectTo = params.get('redirect_to') || '/requests';
   // Define the expected response structure
   interface SignInResponse {
+    email: string; 
+    id: number;
+    store_name: string;
+    store_uid: string;
     subscription_tier: string;
   }
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/users/sign_in`, {
+      const response = await axiosInstance.post<{
+        user: SignInResponse;
+      }>(`${import.meta.env.VITE_API_BASE_URL}/users/sign_in`, {
         user: { email, password },
       }, {
         headers: { 'Content-Type': 'application/json' },
@@ -36,7 +42,7 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
         throw new Error(t('sessionForm.errors.invalidCredentials'));
       }
       const authHeader = response.headers.authorization as string | undefined;
-      const subscriptionTier = (response.data as SignInResponse).subscription_tier;
+      const subscriptionTier = response.data.user.subscription_tier;
       if (authHeader) {
         localStorage.setItem('token', authHeader);
         localStorage.setItem('subscription_tier', subscriptionTier);

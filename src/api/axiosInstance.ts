@@ -12,6 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error: import('axios').AxiosError) => {
+    const errorMessage = error.response?.data as string
     if (error.response?.status === 401) {
       const currentUrl = window.location.href;
       const requestPrefix = `${import.meta.env.VITE_REQUEST_PREFIX}/requests/`;
@@ -21,19 +22,19 @@ axiosInstance.interceptors.response.use(
         const token = currentUrl.substring(requestPrefix.length);
         if (tokenRegex.test(token)) {
           // Valid request URL with token, do NOT redirect
-          return Promise.reject(error);
+          return Promise.reject(new Error(errorMessage));
         } else {
           window.location.href = '/signin';
         }
       }
       const signinPrefix = `${import.meta.env.VITE_REQUEST_PREFIX}/signin`;
       if ( currentUrl.startsWith(signinPrefix) ) {
-        return Promise.reject(error);
+        return Promise.reject(new Error(errorMessage));
       }
       // Otherwise, redirect
       window.location.href = '/signin';
     }
-    return Promise.reject(error);
+    return Promise.reject(new Error(errorMessage));
   }
 );
 
