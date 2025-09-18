@@ -19,6 +19,11 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
   // Parse redirect_to from query string
   const params = new URLSearchParams(location.search);
   const redirectTo = params.get('redirect_to') || '/requests';
+  // Define the expected response structure
+  interface SignInResponse {
+    subscription_tier: string;
+  }
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -27,13 +32,14 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated }) => {
       }, {
         headers: { 'Content-Type': 'application/json' },
       });
-
       if (response.status !== 200) {
         throw new Error(t('sessionForm.errors.invalidCredentials'));
       }
       const authHeader = response.headers.authorization as string | undefined;
+      const subscriptionTier = (response.data as SignInResponse).subscription_tier;
       if (authHeader) {
         localStorage.setItem('token', authHeader);
+        localStorage.setItem('subscription_tier', subscriptionTier);
       } else {
         console.error('No token received from server');
         throw new Error(t('sessionForm.errors.invalidCredentials'));

@@ -14,12 +14,10 @@ axiosInstance.interceptors.response.use(
   (error: import('axios').AxiosError) => {
     if (error.response?.status === 401) {
       const currentUrl = window.location.href;
-      const requestPrefix = 'https://dev-webs.quientiene.com/requests/';
+      const requestPrefix = `${import.meta.env.VITE_REQUEST_PREFIX}/requests/`;
       // Regex: alphanumeric token, 8-64 chars (adjust as needed)
       const tokenRegex = /^[a-zA-Z0-9]{8,64}$/;
-      if (
-        currentUrl.startsWith(requestPrefix)
-      ) {
+      if ( currentUrl.startsWith(requestPrefix) ) {
         const token = currentUrl.substring(requestPrefix.length);
         if (tokenRegex.test(token)) {
           // Valid request URL with token, do NOT redirect
@@ -27,6 +25,10 @@ axiosInstance.interceptors.response.use(
         } else {
           window.location.href = '/signin';
         }
+      }
+      const signinPrefix = `${import.meta.env.VITE_REQUEST_PREFIX}/signin`;
+      if ( currentUrl.startsWith(signinPrefix) ) {
+        return Promise.reject(error);
       }
       // Otherwise, redirect
       window.location.href = '/signin';
