@@ -21,6 +21,8 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, setProposals, isAuthe
   const { t } = useTranslation();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [successDelete, setSuccessDelete] = useState(false);
+  const [errorDelete, setErrorDelete] = useState(false);
 
   if (!proposals) {
     return <CircularProgress />;
@@ -30,6 +32,8 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, setProposals, isAuthe
     <>
       {error && <Alert severity="error">{t('proposalDetails.acceptedError')}</Alert>}
       {success && <Alert severity="success">{t('proposalDetails.acceptedSuccess')}</Alert>}
+      {errorDelete && <Alert severity="error">{t('proposalDetails.deletedError')}</Alert>}
+      {successDelete && <Alert severity="success">{t('proposalDetails.deletedSuccess')}</Alert>}
       <TableContainer component={Paper}>
         <Table
           aria-label="collapsible table"
@@ -44,7 +48,16 @@ const ProposalList:React.FC<ProposalProps> = ({ proposals, setProposals, isAuthe
           </TableHead>
           <TableBody>
             {proposals.map((proposal) => (
-              <ProposalRow key={proposal.created_at} row={proposal} setProposals={setProposals} setSuccess={setSuccess} setError={setError} isAuthenticated={isAuthenticated} />
+              <ProposalRow
+                key={proposal.created_at}
+                row={proposal}
+                setProposals={setProposals}
+                setSuccess={setSuccess}
+                setError={setError}
+                setSuccessDelete={setSuccessDelete}
+                setErrorDelete={setErrorDelete}
+                isAuthenticated={isAuthenticated}
+              />
             ))}
           </TableBody>
         </Table>

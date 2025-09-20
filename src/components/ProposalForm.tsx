@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axiosInstance';
 import ProposalType from '../types/ProposalType';
 import CreateProposalData from '../types/CreateProposalData';
+import FileInput from './FileInput';
 
 interface ProposalFormProps {
   previousProposals?: Array<ReturnType<typeof CreateProposalData>>;
@@ -22,6 +23,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
   const [formData, setFormData] = useState<ProposalType>({
     price: proposal?.price ?? '',
     notes: proposal?.notes ?? '',
+    partImage: proposal?.partImage ?? '',
     warrantyMonths: proposal?.warrantyMonths ?? 0,
     deliveryTimeDays: proposal?.deliveryTimeDays ?? 0,
   });
@@ -42,12 +44,13 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
     const token = localStorage.getItem('token');
 
     try {
-      const proposalResponse = await axiosInstance.post(
+      await axiosInstance.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/v1/proposals`, {
           proposal: {
             request_id: proposal?.requestId,
             price: formData.price,
             notes: formData.notes,
+            part_image: formData.partImage,
             warranty_months: formData.warrantyMonths,
             delivery_time_days: formData.deliveryTimeDays,
           }
@@ -57,33 +60,38 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
             'Content-Type': 'application/json',
           }
         }
-      );
-      const newProposal = CreateProposalData(
-        proposalResponse.data.id,
-        proposalResponse.data.created_at,
-        proposalResponse.data.formatted_price,
-        proposalResponse.data.formatted_created_at,
-        proposalResponse.data.notes,
-        proposalResponse.data.warranty_months,
-        proposalResponse.data.delivery_time_days,
-        proposalResponse.data.status
-      );
-      const prevProposal: Array<ReturnType<typeof CreateProposalData>> = previousProposals || [];
-      const theProposal = [...prevProposal, newProposal]
-      if (setProposals) {
-        setProposals(theProposal);
-      }
-      setSuccess(true);
-      setFormData({
-        price: '',
-        notes: '',
-        warrantyMonths: 1,
-        deliveryTimeDays: 1,
+      ).then(proposalResponse => {
+        console.log('Proposal created:', proposalResponse.data);
+        const newProposal = CreateProposalData(
+          proposalResponse.data.id,
+          proposalResponse.data.created_at,
+          proposalResponse.data.formatted_price,
+          proposalResponse.data.formatted_created_at,
+          proposalResponse.data.notes,
+          proposalResponse.data.part_image,
+          proposalResponse.data.warranty_months,
+          proposalResponse.data.delivery_time_days,
+          proposalResponse.data.status
+        );
+        const prevProposal: Array<ReturnType<typeof CreateProposalData>> = previousProposals || [];
+        const theProposal = [...prevProposal, newProposal]
+        if (setProposals) {
+          setProposals(theProposal);
+        }
+        setSuccess(true);
+        setFormData({
+          price: '',
+          notes: '',
+          partImage: '',
+          warrantyMonths: 1,
+          deliveryTimeDays: 1,
+        });
+        setOpenModal(false)
+      })
+      .catch(error => {
+        setError(t('proposalForm.proposalCreationFailed'));
+        console.log('Error creating proposal 1:', JSON.stringify(error, null, 2));
       });
-      setOpenModal(false)
-    } catch (err) {
-      setError(t('proposalForm.proposalCreationFailed'));
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -106,6 +114,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
             variant="standard"
             label={t('proposalForm.price')}
             style={{ width: 330 }}
+            required
           />
           <br />
           <br />
@@ -116,6 +125,7 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
             onChange={handleChange}
             style={{ width: 330 }}
             name="notes"
+            required
           />
           <TextField
             type="number"
@@ -145,6 +155,15 @@ const ProposalForm: React.FC<ProposalFormProps> = ({ proposal, previousProposals
               min: 0, // Minimum value
               max: 15, // Maximum value
               step: 1, // Increment step
+            }}
+          />
+          <FileInput
+            uploadUrl={`${import.meta.env.VITE_API_BASE_URL}/api/v1/uploads`}
+            onUpload={(url: string) => {
+              setFormData((prevData) => ({
+                ...prevData,
+                partImage: prevData.partImage ? `${prevData.partImage}\n${url}` : url,
+              }));
             }}
           />
         <Box sx={{ mt: 2 }}>

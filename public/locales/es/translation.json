@@ -54,7 +54,10 @@
   },
   "proposalDetails": {
     "acceptedSuccess": "Propuesta aceptada con éxito",
-    "acceptedError": "Error al aceptar la propuesta"
+    "acceptedError": "Error al aceptar la propuesta",
+    "deletedSuccess": "Propuesta eliminada con éxito",
+    "deletedError": "Error al eliminar la propuesta",
+    "partImage": "Imagen del repuesto"
   },
   "proposalsList": {
     "title": "Lista de propuestas",
@@ -82,6 +85,9 @@
     "notes": "Descripción",
     "warrantyMonths": "Meses de garantía",
     "deliveryTimeDays": "Días de entrega",
+    "uploadImage": "Subir imagen",
+    "imagePreview": "Vista previa de la imagen",
+    "uploading": "Subiendo...",
     "submit": "Enviar",
     "cancel": "Cancelar",
     "proposalCreationFailed": "Error al crear la propuesta",

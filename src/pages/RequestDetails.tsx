@@ -80,13 +80,14 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         setRequestData(response.data);
         if(response.data?.proposals) {
           setProposals(
-            response.data.proposals.map((proposal: { notes: string; warranty_months: number; delivery_time_days: number; created_at: string; formatted_created_at: string; }) => ({
+            response.data.proposals.map((proposal: { notes: string; part_image: string; warranty_months: number; delivery_time_days: number; created_at: string; formatted_created_at: string; }) => ({
               ...proposal,
               created_at: proposal.formatted_created_at, // Use formatted_created_at here
               history: {
                 notes: proposal.notes,
-                warranty: proposal.warranty_months,
-                delivery: proposal.delivery_time_days,
+                partImage: proposal.part_image,
+                warrantyMonths: proposal.warranty_months,
+                deliveryTimeDays: proposal.delivery_time_days,
               },
             }))
           );
@@ -115,6 +116,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               formatted_price: string;
               formatted_created_at: string;
               notes: string;
+              part_image: string;
               warranty_months: number;
               delivery_time_days: number;
               status: string;
@@ -128,6 +130,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                     proposal.formatted_price,
                     proposal.formatted_created_at,
                     proposal.notes,
+                    proposal.part_image,
                     proposal.warranty_months,
                     proposal.delivery_time_days,
                     proposal.status
@@ -200,7 +203,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
       )}
       <Box
         sx={{
-          height: 'calc(100vh - 120px)', // 120px AppBar height
+          height: { xs: 'fit-content', md: 'calc(100vh - 120px)' }, // 120px AppBar height
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -211,6 +214,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
             height: '100%',
             alignItems: 'stretch',
             width: '100%',
+            flexDirection: { xs: 'column', md: 'row' }
           }}
         >
           <Grid item xs={12} md={4}
@@ -236,7 +240,9 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   onImageLoad={handleImageLoad}
                   sx={{
                     flex: 1,
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    height: { xs: 'fit-content', md: '100%' },
+                    padding: { xs: 0, md: 1 },
                   }}
                 />
               )}
@@ -265,7 +271,9 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               display: 'flex',
               flexDirection: 'column',
               height: { xs: 'auto', md: '100%' },
-              padding: { xs: 1, md: 2 },
+              padding: { xs: 0, md: 1 },
+              margin: { xs: 0, md: 1 },
+              width: { xs: '100%', md: 'auto'},
             }}
           >
             <Paper elevation={3}
@@ -278,7 +286,14 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                 minHeight: 0,
               }}
             >
-              <Card sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, padding: { xs: 1, md: 2 } }}>
+              <Card sx={{ flex: 1, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                minHeight: 0,
+                padding: { xs: 0, md: 1 },
+                width: { xs: '100%', md: 'auto'},
+              }}
+                >
                 <CardContent sx={{ flex: 1, minHeight: 0, overflow: 'auto', padding: { xs: 1, md: 2 } }}>
                   <Typography gutterBottom variant="h4" component="div">
                     {t('proposalsList.title')}
@@ -308,6 +323,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-notes"
+        sx={{ overflow: { xs: 'scroll', sm: 'auto' } }}
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -319,8 +335,9 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
             setOpenModal={setOpenModal}
             proposal={{
               requestId: show_key ? parseInt(show_key, 10) : undefined,
-              price: null, 
-              notes: null, 
+              price: null,
+              notes: null,
+              partImage: null,
               warrantyMonths: 1,
               deliveryTimeDays: 1
             }} 

@@ -54,7 +54,10 @@
   },
   "proposalDetails": {
     "acceptedSuccess": "Proposal accepted successfully",
-    "acceptedError": "Failed to accept proposal"
+    "acceptedError": "Failed to accept proposal",
+    "deletedSuccess": "Proposal deleted successfully",
+    "deletedError": "Failed to delete proposal",
+    "partImage": "Part Image"
   },
   "proposalsList": {
     "title": "Proposals List",
@@ -82,6 +85,9 @@
     "notes": "Description",
     "warrantyMonths": "Warranty Months",
     "deliveryTimeDays": "Delivery Time Days",
+    "uploadImage": "Upload Image",
+    "imagePreview": "Image Preview",
+    "uploading": "Uploading...",
     "submit": "Submit",
     "cancel": "Cancel",
     "proposalCreationFailed": "Failed to create proposal",

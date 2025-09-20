@@ -12,6 +12,7 @@ interface RequestType {
     created_at: string;
     formatted_price: string;
     notes: string;
+    part_image: string;
     warranty_months: number;
     delivery_time_days: number;
     status: string;

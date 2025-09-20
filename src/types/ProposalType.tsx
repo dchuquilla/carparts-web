@@ -4,6 +4,7 @@ interface ProposalType {
   createdAt?: string;
   price?: string | null;
   notes?: string | null;
+  partImage?: string | null;
   warrantyMonths: number;
   deliveryTimeDays: number;
 }

@@ -37,7 +37,12 @@ const RequestCard: React.FC<RequestCardProps> = ({
       sx={sx}
       onClick={onClick}
     >
-      <CardActionArea>
+      <CardActionArea sx={{ 
+        display: 'flex',
+        alignItems: 'stretch',
+        flexDirection: "column",
+        height: { xs: 'fit-content', md: "100%"}
+        }}>
         {loadingImage && <CircularProgress />}
         <CardMedia
           component="img"
@@ -50,7 +55,7 @@ const RequestCard: React.FC<RequestCardProps> = ({
             filter: loadingImage ? 'none' : 'blur(4px)',
             transition: 'filter 0.7s ease-in-out',
           }}
-        />
+          />
         <CardContent sx={{ p: { xs: 1, md: 2 } }}>
           <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: { xs: '1rem', md: '1.25rem' }, fontWeight: 'bold', color: 'primary.main' }}>
             {request.part_name ? request.part_name.toUpperCase() : ''}
