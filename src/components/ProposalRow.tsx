@@ -8,6 +8,7 @@ import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import ShoppingBasketTwoToneIcon from '@mui/icons-material/ShoppingBasketTwoTone';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 import Typography from '@mui/material/Typography';
 import CreateProposalData from '../types/CreateProposalData';
 import TableRow from '@mui/material/TableRow';
@@ -17,6 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import Button from '@mui/material/Button';
 import axiosInstance from '../api/axiosInstance';
+import { CircularProgress, Dialog, DialogActions, DialogContent } from '@mui/material';
 
 const token = localStorage.getItem('token');
 
@@ -77,24 +79,37 @@ function ProposalRow(props: inputProps) {
   const { t } = useTranslation();
   const { row, setProposals, setSuccess, setError, setSuccessDelete, setErrorDelete } = props;
   const [open, setOpen] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
   const [partImageUrl, setPartImageUrl] = useState<string>('');
+  const [loadingImage, setLoadingImage] = useState(true);
 
   useEffect(() => {
+    setLoadingImage(true);
     const fetchPartImageUrl = async () => {
       if (!row.history.partImage) return '';
       try {
         const response = await axiosInstance.get<{ url: string }>(
           `${import.meta.env.VITE_API_BASE_URL}/api/v1/uploads/${row.history.partImage}`
         );
-      console.log("Part image URL fetched:", response.data);
-      setPartImageUrl(response.data.url);
-    } catch (error) {
-      console.error("Error fetching part image URL:", error);
-      setPartImageUrl('');
-    }
+        console.log("Part image URL fetched:", response.data);
+        setPartImageUrl(response.data.url);
+        setLoadingImage(false);
+      } catch (error) {
+        console.error("Error fetching part image URL:", error);
+        setPartImageUrl('');
+        setLoadingImage(false);
+      }
+    };
+    void fetchPartImageUrl();
+  }, [row.history.partImage]);
+
+  const handleImageLoad = () => {
+    setLoadingImage(false);
   };
-  void fetchPartImageUrl();
-}, [row.history.partImage]);
+
+  const handleClose = () => {
+    setOpenImage(false);
+  };
 
   return (
     <React.Fragment>
@@ -130,7 +145,7 @@ function ProposalRow(props: inputProps) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell sx={{ padding: { xs: 0, md: 2 } }} style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: { xs: 0, md: 2 }, backgroundColor: "rgb(238, 242, 241)" }} style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div" sx={{ mt: 2 }} color='primary'>
@@ -160,8 +175,15 @@ function ProposalRow(props: inputProps) {
                   <Typography variant="h6" gutterBottom component="div" sx={{ mt: 2 }} color='primary'>
                     {t('proposalDetails.partImage')}
                   </Typography>
-                  <Box sx={{ mt: 2 }}>
-                    <img src={partImageUrl} alt={t('proposalDetails.partImage')} style={{ maxWidth: '100%' }} />
+                  <Box
+                    sx={{ mt: 2 }}
+                    onClick={() => setOpenImage(true)}
+                  >
+                    <img
+                      src={partImageUrl}
+                      alt={t('proposalDetails.partImage')}
+                      style={{ maxWidth: '100%' }}
+                    />
                   </Box>
                 </>
               )}
@@ -169,6 +191,31 @@ function ProposalRow(props: inputProps) {
           </Collapse>
         </TableCell>
       </TableRow>
+      <Dialog
+        open={openImage}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+        sx={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)', // Set a crystal transparent background
+          backdropFilter: 'blur(10px)', // Add a blur effect for a frosted glass look
+        }}
+        PaperProps={{ style: { margin: 0, backgroundColor: 'rgba(255, 255, 255, 0.0)' } }}
+      >
+        <DialogActions sx={{ backgroundColor: 'rgba(255, 255, 255)' }}>
+          <Button autoFocus onClick={handleClose}>
+            <CancelSharpIcon />
+          </Button>
+        </DialogActions>
+        <DialogContent sx={{ p: 0, m: 0, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+          {loadingImage && <CircularProgress />}
+          <img
+            src={partImageUrl}
+            alt={t('requestDetails.partImage')}
+            style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
+            onLoad={handleImageLoad}
+          />
+        </DialogContent>
+      </Dialog>
     </React.Fragment>
   );
 }

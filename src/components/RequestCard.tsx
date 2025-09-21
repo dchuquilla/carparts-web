@@ -46,15 +46,17 @@ const RequestCard: React.FC<RequestCardProps> = ({
         {loadingImage && <CircularProgress />}
         <CardMedia
           component="img"
-          height="70"
-          image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
-          alt={t('requestDetails.partImage')}
-          onLoad={onImageLoad}
-          style={{
+          sx={{ 
+            height: { xs: 70, md: 500 }, 
+            width: '100%', 
+            objectFit: 'cover',
             display: loadingImage ? 'none' : 'block',
             filter: loadingImage ? 'none' : 'blur(4px)',
             transition: 'filter 0.7s ease-in-out',
           }}
+          image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
+          alt={t('requestDetails.partImage')}
+          onLoad={onImageLoad}
           />
         <CardContent sx={{ p: { xs: 1, md: 2 } }}>
           <Typography gutterBottom variant="h5" component="div" sx={{ fontSize: { xs: '1rem', md: '1.25rem' }, fontWeight: 'bold', color: 'primary.main' }}>

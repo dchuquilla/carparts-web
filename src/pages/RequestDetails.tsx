@@ -14,6 +14,7 @@ import Modal from '@mui/material/Modal';
 
 import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -22,8 +23,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 
 import RequestType from '../types/RequestType';
 import RequestCard from '../components/RequestCard';
@@ -47,8 +46,6 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
   const handleCloseModal = () => setOpenModal(false);
 
   const [open, setOpen] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
   const token = localStorage.getItem('token');
 
   const handleClickOpen = () => {
@@ -214,7 +211,8 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
             height: '100%',
             alignItems: 'stretch',
             width: '100%',
-            flexDirection: { xs: 'column', md: 'row' }
+            flexDirection: { xs: 'column', md: 'row' },
+            flexFlow: { xs: 'wrap', md: 'nowrap' },
           }}
         >
           <Grid item xs={12} md={4}
@@ -235,7 +233,10 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               }}
             >
               {requestData && (
-                <RequestCard key={requestData.show_key} request={requestData} onClick={handleClickOpen}
+                <RequestCard 
+                  key={requestData.show_key}
+                  request={requestData}
+                  onClick={handleClickOpen}
                   loadingImage={loadingImage}
                   onImageLoad={handleImageLoad}
                   sx={{
@@ -246,24 +247,6 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
                   }}
                 />
               )}
-              <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-              >
-                <DialogContent>
-                  {loadingImage && <CircularProgress />}
-                  <img
-                    src={requestData?.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
-                    alt={t('requestDetails.partImage')}
-                    style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
-                    onLoad={handleImageLoad}
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus onClick={handleClose}>
-                    {t('close')}
-                  </Button>
-                </DialogActions>
-              </Dialog>
             </Paper>
           </Grid>
           <Grid item
@@ -273,7 +256,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
               height: { xs: 'auto', md: '100%' },
               padding: { xs: 0, md: 1 },
               margin: { xs: 0, md: 1 },
-              width: { xs: '100%', md: 'auto'},
+              width: { xs: '100%', md: '70%'},
             }}
           >
             <Paper elevation={3}
@@ -317,6 +300,32 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
           </Grid>
         </Grid>
       </Box>
+      
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+        sx={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)', // Set a crystal transparent background
+          backdropFilter: 'blur(10px)', // Add a blur effect for a frosted glass look
+        }}
+        PaperProps={{ style: { margin: 0, backgroundColor: 'rgba(255, 255, 255, 0.0)' } }}
+      >
+        <DialogActions sx={{ backgroundColor: 'rgba(255, 255, 255)' }}>
+          <Button autoFocus onClick={handleClose}>
+            <CancelSharpIcon />
+          </Button>
+        </DialogActions>
+        <DialogContent sx={{ p: 0, m: 0, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+          {loadingImage && <CircularProgress />}
+          <img
+            src={requestData?.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
+            alt={t('requestDetails.partImage')}
+            style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
+            onLoad={handleImageLoad}
+          />
+        </DialogContent>
+      </Dialog>
 
       <Modal
         open={openModal}
