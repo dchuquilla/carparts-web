@@ -55,17 +55,22 @@ const RequestList: React.FC<SignInProps> = ({ isAuthenticated, setIsAuthenticate
       params.set("page", String(pageArg ?? page));
       params.set("per_page", String(perPage));
 
-    axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/requests?${params.toString()}`)
-      .then(response => {
-        setRequests(response.data.requests);
-        console.log("requestsMeta:", response.data.meta);
-        setMeta(response.data.meta);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the requests!', error);
-        setLoading(false);
-      });
+    axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/requests?${params.toString()}`, {
+      headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      setRequests(response.data.requests);
+      console.log("requestsMeta:", response.data.meta);
+      setMeta(response.data.meta);
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error('There was an error fetching the requests!', error);
+      setLoading(false);
+    });
   }, [filters, page, perPage, setIsAuthenticated]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
