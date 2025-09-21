@@ -155,13 +155,15 @@ function ProposalRow(props: inputProps) {
                 </TableBody>
               </Table>
 
-              <Typography variant="h6" gutterBottom component="div" sx={{ mt: 2 }} color='primary'>
-                {t('proposalDetails.partImage')}
-              </Typography>
               {row.history.partImage && (
-                <Box sx={{ mt: 2 }}>
-                  <img src={partImageUrl} alt={t('proposalDetails.partImage')} style={{ maxWidth: '100%' }} />
-                </Box>
+                <>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ mt: 2 }} color='primary'>
+                    {t('proposalDetails.partImage')}
+                  </Typography>
+                  <Box sx={{ mt: 2 }}>
+                    <img src={partImageUrl} alt={t('proposalDetails.partImage')} style={{ maxWidth: '100%' }} />
+                  </Box>
+                </>
               )}
             </Box>
           </Collapse>
