@@ -24,6 +24,9 @@ axiosInstance.interceptors.response.use(
           // Valid request URL with token, do NOT redirect
           return Promise.reject(new Error(errorMessage));
         } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('subscription_tier');
+          // Invalid token, redirect to signin
           window.location.href = '/signin';
         }
       }
@@ -32,6 +35,8 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(new Error(errorMessage));
       }
       // Otherwise, redirect
+      localStorage.removeItem('token');
+      localStorage.removeItem('subscription_tier');
       window.location.href = '/signin';
     }
     return Promise.reject(new Error(errorMessage));
