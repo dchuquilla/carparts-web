@@ -195,113 +195,109 @@ function App() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#1A1A1A' }}>
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={[
-              {
-                marginRight: 5,
-              },
-              open && { display: 'none' },
-            ]}
+        color="inherit"
+        aria-label="open drawer"
+        onClick={handleDrawerOpen}
+        edge="start"
+        sx={[
+          {
+            marginRight: 5,
+          },
+          open && { display: 'none' },
+        ]}
           >
-            <MenuIcon />
+        <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            QuienTiene.com
-          </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+        <img src="/quien_tiene_logo_d.png" alt="QuienTiene Logo" style={{ height: 40, marginRight: 8 }} />
+        <Typography variant="h6" component="div">
+          QuienTiene.com
+        </Typography>
+        </Box>
 
           {isAuthenticated && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={() => { void handleLogOut(); }}>Logout</MenuItem>
-              </Menu>
-            </div>
+        <div>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
+            <MenuItem onClick={() => { void handleLogOut(); }}>Logout</MenuItem>
+          </Menu>
+        </div>
           )}
         </Toolbar>
       </AppBar>
 
       {/* Sidebar */}
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{ '& .MuiDrawer-paper': { backgroundColor: '#1A1A1A', color: '#FFFFFF' } }}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          <IconButton onClick={handleDrawerClose} sx={{ color: '#FFFFFF' }}>
+        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
+        <Divider sx={{ backgroundColor: '#FFFFFF' }} />
         <List>
           <ListItem key="Inicio" disablePadding sx={{ display: 'block' }} component={Link} to="/">
-            <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, },
-                open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-              <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
-                  open ? { mr: 3, } : { mr: 'auto', }, ]} >
-                <InboxIcon />
-              </HomeTwoToneIcon>
-              <ListItemText primary="Inicio" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
-            </ListItemButton>
+        <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, color: '#FFFFFF' },
+            open ? { justifyContent: 'initial' } : { justifyContent: 'center' } ]}>
+          <HomeTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', color: '#FFFFFF' },
+          open ? { mr: 3 } : { mr: 'auto' } ]} />
+          <ListItemText primary="Inicio" sx={[ open ? { opacity: 1 } : { opacity: 0 } ]} />
+        </ListItemButton>
           </ListItem>
           {isAuthenticated ? (
-            <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
-              <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, },
-                open ? { justifyContent: 'initial', } : { justifyContent: 'center', }, ]} >
-                <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', },
-                  open ? { mr: 3, } : { mr: 'auto', }, ]} >
-                <InboxIcon />
-                </MoveToInboxTwoToneIcon>
-                <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1, } : { opacity: 0, }, ]} />
-              </ListItemButton>
-            </ListItem>
+        <ListItem key="Solicitudes" disablePadding sx={{ display: 'block' }} component={Link} to="/requests">
+          <ListItemButton onClick={handleDrawerClose} sx={[ { minHeight: 48, px: 2.5, color: '#FFFFFF' },
+            open ? { justifyContent: 'initial' } : { justifyContent: 'center' } ]}>
+            <MoveToInboxTwoToneIcon sx={[ { minWidth: 0, justifyContent: 'center', color: '#FFFFFF' },
+          open ? { mr: 3 } : { mr: 'auto' } ]} />
+            <ListItemText primary="Solicitudes" sx={[ open ? { opacity: 1 } : { opacity: 0 } ]} />
+          </ListItemButton>
+        </ListItem>
           ) : (
-            <><ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
-                <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, },
-                open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
-                  <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
-                  open ? { mr: 3, } : { mr: 'auto', },]}>
-                    <InboxIcon />
-                  </LoginTwoToneIcon>
-                  <ListItemText primary={t('login')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
-                <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, },
-                open ? { justifyContent: 'initial', } : { justifyContent: 'center', },]}>
-                  <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', },
-                  open ? { mr: 3, } : { mr: 'auto', },]}>
-                    <InboxIcon />
-                  </HowToRegTwoToneIcon>
-                  <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1, } : { opacity: 0, },]} />
-                </ListItemButton>
-              </ListItem>
-            </>
+        <>
+          <ListItem key="Login" disablePadding sx={{ display: 'block' }} component={Link} to="/signin">
+            <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, color: '#FFFFFF' },
+            open ? { justifyContent: 'initial' } : { justifyContent: 'center' }]}>
+          <LoginTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', color: '#FFFFFF' },
+          open ? { mr: 3 } : { mr: 'auto' }]} />
+          <ListItemText primary={t('login')} sx={[open ? { opacity: 1 } : { opacity: 0 }]} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Signup" disablePadding sx={{ display: 'block' }} component={Link} to="/users/new">
+            <ListItemButton onClick={handleDrawerClose} sx={[{ minHeight: 48, px: 2.5, color: '#FFFFFF' },
+            open ? { justifyContent: 'initial' } : { justifyContent: 'center' }]}>
+          <HowToRegTwoToneIcon sx={[{ minWidth: 0, justifyContent: 'center', color: '#FFFFFF' },
+          open ? { mr: 3 } : { mr: 'auto' }]} />
+          <ListItemText primary={t('signUp')} sx={[open ? { opacity: 1 } : { opacity: 0 }]} />
+            </ListItemButton>
+          </ListItem>
+        </>
           )}
         </List>
       </Drawer>
