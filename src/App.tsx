@@ -16,7 +16,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import HowToRegTwoToneIcon from '@mui/icons-material/HowToRegTwoTone';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoveToInboxTwoToneIcon from '@mui/icons-material/MoveToInboxTwoTone';

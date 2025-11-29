@@ -47,14 +47,13 @@ const RequestCard: React.FC<RequestCardProps> = ({
         <CardMedia
           component="img"
           sx={{ 
-            height: { xs: 70, md: 500 }, 
+            height: { xs: 90, md: 120 }, 
             width: '100%', 
             objectFit: 'cover',
             display: loadingImage ? 'none' : 'block',
-            filter: loadingImage ? 'none' : 'blur(4px)',
             transition: 'filter 0.7s ease-in-out',
           }}
-          image={request.part_image ? request.part_image : "/quien_tiene_logo_n.png"}
+          image={request.part_image ? request.part_image : "/quien_tiene_logo_w.png"}
           alt={t('requestDetails.partImage')}
           onLoad={onImageLoad}
           />

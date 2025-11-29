@@ -319,7 +319,7 @@ const RequestDetails:React.FC<SignInProps> = ({ isAuthenticated }) => {
         <DialogContent sx={{ p: 0, m: 0, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
           {loadingImage && <CircularProgress />}
           <img
-            src={requestData?.part_image ? requestData.part_image : "/quien_tiene_logo_n.png"}
+            src={requestData?.part_image ? requestData.part_image : "/quien_tiene_logo_w.png"}
             alt={t('requestDetails.partImage')}
             style={{ width: '100%', display: loadingImage ? 'none' : 'block' }}
             onLoad={handleImageLoad}
